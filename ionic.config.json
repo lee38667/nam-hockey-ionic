@@ -1,0 +1,8 @@
+{
+  "name": "NamHockeyIonic",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite",
+  "id": "46b93519"
+}
