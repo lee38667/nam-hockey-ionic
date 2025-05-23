@@ -18,7 +18,7 @@ const Home: React.FC = () => (
         <IonGrid>
           <IonRow>
             <IonCol size="6">
-              <IonCard className="ion-text-center">
+              <IonCard className="ion-text-center" routerLink="/app/players">
                 <IonCardContent>
                   <IonIcon icon={personCircleOutline} size="large" color="primary"></IonIcon>
                   <p>My Profile</p>
@@ -36,7 +36,7 @@ const Home: React.FC = () => (
           </IonRow>
           <IonRow>
             <IonCol size="6">
-              <IonCard className="ion-text-center">
+              <IonCard className="ion-text-center" routerLink="/app/teams">
                 <IonCardContent>
                   <IonIcon icon={peopleOutline} size="large" color="primary"></IonIcon>
                   <p>My Teams</p>
