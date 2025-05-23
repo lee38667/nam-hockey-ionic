@@ -1,4 +1,4 @@
 import { getAuth } from 'firebase/auth';
-import { app } from '../backend/firebaseConfig';
+import app from './firebaseConfig';
 
 export const auth = getAuth(app); 
