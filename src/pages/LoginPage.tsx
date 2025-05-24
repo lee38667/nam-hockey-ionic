@@ -1,8 +1,9 @@
 // src/pages/LoginPage.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonButton, IonItem, IonLabel } from '@ionic/react';
 import { login } from '../firebase/firebaseAuth';
 import { useHistory } from 'react-router-dom';
+import { SplashScreen } from '@capacitor/splash-screen';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -20,6 +21,11 @@ const LoginPage: React.FC = () => {
       console.error("Login failed:", error);
     }
   };
+
+  useEffect(() => {
+    // Hide the splash screen after the app is ready
+    SplashScreen.hide();
+  }, []); // Run once on component mount
 
   return (
     <IonPage>

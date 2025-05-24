@@ -1,15 +1,7 @@
-import React, { useState } from 'react';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonInput, IonButton } from '@ionic/react';
+import React from 'react';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonList } from '@ionic/react';
 
 const Teams: React.FC = () => {
-  const [teamName, setTeamName] = useState('');
-
-  const handleAddTeam = () => {
-    console.log('Adding team:', teamName);
-    // TODO: Implement database integration here
-    setTeamName(''); // Clear the input after submission
-  };
-
   return (
     <IonPage>
       <IonHeader>
@@ -18,20 +10,23 @@ const Teams: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <h2>Team Registration & Management</h2>
-        <p>Register and manage teams here.</p>
-
         <div className="ion-padding">
-          <IonItem>
-            <IonLabel position="floating">Team Name</IonLabel>
-            <IonInput value={teamName} onIonChange={e => setTeamName(e.detail.value!)}></IonInput>
-          </IonItem>
-          <IonButton expand="block" className="ion-padding-top" onClick={handleAddTeam}>Add Team</IonButton>
+          <h2>Teams</h2>
+          <IonList>
+            <IonItem routerLink="/app/teams/team-details/1"> {/* Example routerLink, replace with actual team ID */}
+              <IonLabel>Team Alpha</IonLabel>
+            </IonItem>
+            <IonItem routerLink="/app/teams/team-details/2"> {/* Example routerLink */}
+              <IonLabel>Team Beta</IonLabel>
+            </IonItem>
+            <IonItem routerLink="/app/teams/team-details/3"> {/* Example routerLink */}
+              <IonLabel>Team Gamma</IonLabel>
+            </IonItem>
+          </IonList>
         </div>
-
       </IonContent>
     </IonPage>
   );
 };
 
-export default Teams; 
+export default Teams;

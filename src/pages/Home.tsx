@@ -1,14 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { } from 'react';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonIcon, IonLabel, IonItem, IonList, IonText } from '@ionic/react';
 import { personCircleOutline, peopleOutline, calendarOutline, radio } from 'ionicons/icons';
-import { SplashScreen } from '@capacitor/splash-screen';
 
 const Home: React.FC = () => {
 
-  useEffect(() => {
-    // Hide the splash screen after the app is ready
-    SplashScreen.hide();
-  }, []); // Run once on component mount
 
   return (
     <IonPage>
