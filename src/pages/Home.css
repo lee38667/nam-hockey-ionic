@@ -1,0 +1,129 @@
+.hero-section {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.hero-section ion-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+  color: white;
+}
+
+.hero-overlay h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.hero-overlay p {
+  margin: 8px 0 0;
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+.quick-access-card {
+  height: 100%;
+  margin: 10px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.quick-access-card:hover {
+  transform: translateY(-2px);
+}
+
+.match-preview {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.match-preview .team {
+  flex: 1;
+  text-align: center;
+  font-weight: 500;
+}
+
+.match-preview .score {
+  flex: 0 0 auto;
+  padding: 0 15px;
+  font-weight: bold;
+  color: var(--ion-color-primary);
+}
+
+.news-preview h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.news-preview p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ion-color-medium);
+}
+
+.league-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.league-table th,
+.league-table td {
+  padding: 8px;
+  text-align: center;
+  border-bottom: 1px solid var(--ion-color-light);
+}
+
+.league-table th {
+  background: var(--ion-color-primary);
+  color: white;
+  font-weight: 500;
+}
+
+.league-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-section {
+    height: 200px;
+  }
+
+  .hero-overlay h1 {
+    font-size: 20px;
+  }
+
+  .hero-overlay p {
+    font-size: 14px;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .quick-access-card {
+    --background: #2a2a2a;
+  }
+
+  .league-table th {
+    background: var(--ion-color-primary-shade);
+  }
+
+  .league-table td {
+    border-bottom-color: #3a3a3a;
+  }
+} 

@@ -1,97 +1,124 @@
 import React, { useEffect } from 'react';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonIcon, IonLabel, IonItem, IonList, IonText } from '@ionic/react';
+import {
+  IonPage,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent,
+  IonIcon,
+  IonLabel,
+  IonItem,
+  IonList,
+  IonText,
+  IonImg,
+  IonRefresher,
+  IonRefresherContent,
+  RefresherEventDetail
+} from '@ionic/react';
 import { personCircleOutline, peopleOutline, calendarOutline, radio } from 'ionicons/icons';
+import { RefresherCustomEvent } from '@ionic/react';
+import './Home.css';
 
 const Home: React.FC = () => {
-
+  const handleRefresh = (event: RefresherCustomEvent) => {
+    setTimeout(() => {
+      event.detail.complete();
+    }, 2000);
+  };
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Home</IonTitle>
+          <IonTitle>Namibia Hockey</IonTitle>
         </IonToolbar>
       </IonHeader>
+
       <IonContent fullscreen>
-        {/* Quick View Section */}
-        <div className="ion-padding-top ion-padding-start ion-padding-end">
-          <IonText color="medium">
-            <h6>QUICK VIEW</h6>
-          </IonText>
-          <IonGrid>
-            <IonRow>
-              <IonCol size="6">
-                <IonCard className="ion-text-center" routerLink="/app/players">
-                  <IonCardContent>
-                    <IonIcon icon={personCircleOutline} size="large" color="primary"></IonIcon>
-                    <p>Players</p>
-                  </IonCardContent>
-                </IonCard>
-              </IonCol>
-              <IonCol size="6">
-                <IonCard className="ion-text-center" routerLink="/app/teams">
-                  <IonCardContent>
-                    <IonIcon icon={peopleOutline} size="large" color="primary"></IonIcon>
-                    <p>Teams</p>
-                  </IonCardContent>
-                </IonCard>
-              </IonCol>
-            </IonRow>
-            <IonRow>
-              <IonCol size="6">
-                <IonCard className="ion-text-center" routerLink="/app/events">
-                  <IonCardContent>
-                    <IonIcon icon={calendarOutline} size="large" color="primary"></IonIcon>
-                    <p>Events</p>
-                  </IonCardContent>
-                </IonCard>
-              </IonCol>
-              <IonCol size="6">
-                <IonCard className="ion-text-center" routerLink="/app/live">
-                  <IonCardContent>
-                    <IonIcon icon={radio} size="large" color="primary"></IonIcon>
-                    <p>Live</p>
-                  </IonCardContent>
-                </IonCard>
-              </IonCol>
-            </IonRow>
-          </IonGrid>
+        <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
+          <IonRefresherContent></IonRefresherContent>
+        </IonRefresher>
+
+        {/* Hero Section */}
+        <div className="hero-section">
+          <IonImg src="/src/pages/images/hockey-players.jpg" alt="Hockey Players" />
+          <div className="hero-overlay">
+            <h1>Welcome to Namibia Hockey</h1>
+            <p>Your source for Namibian hockey news, scores, and updates</p>
+          </div>
         </div>
 
-        {/* Posts Section */}
-        <div className="ion-padding-start ion-padding-end">
-           <IonText color="medium">
-            <h6>POSTS</h6>
-          </IonText>
-          <IonCard>
-            <div style={{ position: 'relative' }}>
-              <img src="./images/hockey-players.jpg" alt="Hockey Players" style={{ width: '100%', height: '150px', objectFit: 'cover' }} />
-              <div style={{ position: 'absolute', bottom: '0', left: '0', right: '0', padding: '10px', background: 'linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0))', color: 'white' }}>
-                <div style={{ fontSize: '1.2em', fontWeight: 'bold' }}>Welcome to your Club</div>
-                <div style={{ fontSize: '0.9em' }}>Oct 18, 2021</div>
-              </div>
-            </div>
-            {/* Add other post content here if needed */}
-          </IonCard>
-        </div>
+        {/* Quick Access Cards */}
+        <IonGrid>
+          <IonRow>
+            <IonCol size="12" sizeMd="6" sizeLg="4">
+              <IonCard className="quick-access-card">
+                <IonCardHeader>
+                  <IonCardTitle>Today's Matches</IonCardTitle>
+                </IonCardHeader>
+                <IonCardContent>
+                  <div className="match-preview">
+                    <div className="team">Team A</div>
+                    <div className="score">2 - 1</div>
+                    <div className="team">Team B</div>
+                  </div>
+                </IonCardContent>
+              </IonCard>
+            </IonCol>
 
-        {/* Calendar Section */}
-        <div className="ion-padding-start ion-padding-end ion-padding-bottom">
-           <IonText color="medium">
-            <h6>CALENDAR</h6>
-          </IonText>
-          <IonList inset={true}>
-            <IonItem>
-              <IonIcon icon={calendarOutline} slot="start" color="primary"></IonIcon>
-              <IonLabel>
-                <h2>Upcoming events</h2>
-                <p>Ladies' 1st XI vs Opposition 7</p>
-                <p>2022-02-21</p>
-              </IonLabel>
-            </IonItem>
-          </IonList>
-        </div>
+            <IonCol size="12" sizeMd="6" sizeLg="4">
+              <IonCard className="quick-access-card">
+                <IonCardHeader>
+                  <IonCardTitle>Latest News</IonCardTitle>
+                </IonCardHeader>
+                <IonCardContent>
+                  <div className="news-preview">
+                    <h3>National Team Qualifies for Championship</h3>
+                    <p>Read more about this exciting achievement...</p>
+                  </div>
+                </IonCardContent>
+              </IonCard>
+            </IonCol>
 
+            <IonCol size="12" sizeMd="6" sizeLg="4">
+              <IonCard className="quick-access-card">
+                <IonCardHeader>
+                  <IonCardTitle>League Standings</IonCardTitle>
+                </IonCardHeader>
+                <IonCardContent>
+                  <table className="league-table">
+                    <thead>
+                      <tr>
+                        <th>Pos</th>
+                        <th>Team</th>
+                        <th>Pts</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>Team A</td>
+                        <td>15</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>Team B</td>
+                        <td>12</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </IonCardContent>
+              </IonCard>
+            </IonCol>
+          </IonRow>
+        </IonGrid>
       </IonContent>
     </IonPage>
   );

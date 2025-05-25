@@ -10,17 +10,13 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { home, people, person, calendar, radio, settings } from 'ionicons/icons';
-import Home from './pages/Home';
-import Teams from './pages/Teams';
-import Players from './pages/Players';
-import Events from './pages/Events';
-import Live from './pages/Live';
-import LoginPage from './pages/LoginPage';
-import SignupPage from './pages/SignupPage';
-import AddTeamPage from './pages/AddTeamPage';
-import AddEventPage from './pages/AddEventPage';
-import SettingsPage from './pages/SettingsPage';
+import {
+  homeOutline,
+  calendarOutline,
+  peopleOutline,
+  newspaperOutline,
+  menuOutline
+} from 'ionicons/icons';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -52,89 +48,67 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+/* Pages */
+import Home from './pages/Home';
+import Matches from './pages/Matches';
+import Teams from './pages/Teams';
+import News from './pages/News';
+import More from './pages/More';
+
 setupIonicReact();
 
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
-      <IonRouterOutlet>
-        {/* Authentication Routes */}
-        <Route exact path="/login">
-          <LoginPage />
-        </Route>
-        <Route exact path="/signup">
-          <SignupPage />
-        </Route>
+      <IonTabs>
+        <IonRouterOutlet>
+          <Route exact path="/home">
+            <Home />
+          </Route>
+          <Route exact path="/matches">
+            <Matches />
+          </Route>
+          <Route exact path="/teams">
+            <Teams />
+          </Route>
+          <Route exact path="/news">
+            <News />
+          </Route>
+          <Route exact path="/more">
+            <More />
+          </Route>
+          <Route exact path="/">
+            <Redirect to="/home" />
+          </Route>
+        </IonRouterOutlet>
 
-        {/* New Pages (Add Team, Add Event) */}
-        <Route exact path="/add-team">
-          <AddTeamPage />
-        </Route>
-        <Route exact path="/add-event">
-          <AddEventPage />
-        </Route>
+        <IonTabBar slot="bottom">
+          <IonTabButton tab="home" href="/home">
+            <IonIcon icon={homeOutline} />
+            <IonLabel>Home</IonLabel>
+          </IonTabButton>
 
-        {/* Main Application Routes with Tabs */}
-        <Route path="/app/">
-          <IonTabs>
-            <IonRouterOutlet>
-              <Route exact path="/app/home">
-                <Home />
-              </Route>
-              <Route exact path="/app/teams">
-                <Teams />
-              </Route>
-              <Route exact path="/app/players">
-                <Players />
-              </Route>
-              <Route exact path="/app/events">
-                <Events />
-              </Route>
-              <Route exact path="/app/live">
-                <Live />
-              </Route>
-              <Route exact path="/app/settings">
-                <SettingsPage />
-              </Route>
-              {/* Default redirect within tabs */}
-              <Route exact path="/app/">
-                <Redirect to="/app/home" />
-              </Route>
-            </IonRouterOutlet>
-            <IonTabBar slot="bottom">
-              <IonTabButton tab="home" href="/app/home">
-                <IonIcon aria-hidden="true" icon={home} />
-                <IonLabel>Home</IonLabel>
-              </IonTabButton>
-              <IonTabButton tab="teams" href="/app/teams">
-                <IonIcon aria-hidden="true" icon={people} />
-                <IonLabel>Teams</IonLabel>
-              </IonTabButton>
-              <IonTabButton tab="players" href="/app/players">
-                <IonIcon aria-hidden="true" icon={person} />
-                <IonLabel>Players</IonLabel>
-              </IonTabButton>
-              <IonTabButton tab="events" href="/app/events">
-                <IonIcon aria-hidden="true" icon={calendar} />
-                <IonLabel>Events</IonLabel>
-              </IonTabButton>
-              <IonTabButton tab="live" href="/app/live">
-                <IonIcon aria-hidden="true" icon={radio} />
-                <IonLabel>Live</IonLabel>
-              </IonTabButton>
-              <IonTabButton tab="settings" href="/app/settings">
-                <IonIcon aria-hidden="true" icon={settings} />
-                <IonLabel>Settings</IonLabel>
-              </IonTabButton>
-            </IonTabBar>
-          </IonTabs>
-        </Route>
+          <IonTabButton tab="matches" href="/matches">
+            <IonIcon icon={calendarOutline} />
+            <IonLabel>Matches</IonLabel>
+          </IonTabButton>
 
-        {/* Initial Redirect to Login */}
-        <Route exact path="/">
-          <Redirect to="/login" />
-        </Route>
-      </IonRouterOutlet>
+          <IonTabButton tab="teams" href="/teams">
+            <IonIcon icon={peopleOutline} />
+            <IonLabel>Teams</IonLabel>
+          </IonTabButton>
+
+          <IonTabButton tab="news" href="/news">
+            <IonIcon icon={newspaperOutline} />
+            <IonLabel>News</IonLabel>
+          </IonTabButton>
+
+          <IonTabButton tab="more" href="/more">
+            <IonIcon icon={menuOutline} />
+            <IonLabel>More</IonLabel>
+          </IonTabButton>
+        </IonTabBar>
+      </IonTabs>
     </IonReactRouter>
   </IonApp>
 );
