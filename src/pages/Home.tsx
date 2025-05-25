@@ -1,4 +1,4 @@
-import React, { } from 'react';
+import React, { useEffect } from 'react';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardContent, IonIcon, IonLabel, IonItem, IonList, IonText } from '@ionic/react';
 import { personCircleOutline, peopleOutline, calendarOutline, radio } from 'ionicons/icons';
 
