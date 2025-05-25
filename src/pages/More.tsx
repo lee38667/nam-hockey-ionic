@@ -11,7 +11,9 @@ import {
   IonAvatar,
   IonButton,
   IonToggle,
-  IonItemDivider
+  IonItemDivider,
+  useIonAlert,
+  useIonToast
 } from '@ionic/react';
 import {
   personCircleOutline,
@@ -23,9 +25,59 @@ import {
   moonOutline,
   languageOutline
 } from 'ionicons/icons';
+import { useState, useEffect } from 'react';
 import './More.css';
 
 const More: React.FC = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [presentAlert] = useIonAlert();
+  const [presentToast] = useIonToast();
+
+  useEffect(() => {
+    // Check system preference for dark mode
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setIsDarkMode(prefersDark);
+    document.body.classList.toggle('dark', prefersDark);
+  }, []);
+
+  const toggleDarkMode = (e: CustomEvent) => {
+    const isDark = e.detail.checked;
+    setIsDarkMode(isDark);
+    document.body.classList.toggle('dark', isDark);
+    presentToast({
+      message: `${isDark ? 'Dark' : 'Light'} mode enabled`,
+      duration: 2000,
+      position: 'bottom'
+    });
+  };
+
+  const handleLogout = () => {
+    presentAlert({
+      header: 'Logout',
+      message: 'Are you sure you want to logout?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Logout',
+          handler: () => {
+            // Add your logout logic here
+            // For example: clear local storage, redirect to login, etc.
+            localStorage.clear();
+            window.location.href = '/login';
+            presentToast({
+              message: 'Logged out successfully',
+              duration: 2000,
+              position: 'bottom'
+            });
+          }
+        }
+      ]
+    });
+  };
+
   return (
     <IonPage>
       <IonHeader>
@@ -67,7 +119,11 @@ const More: React.FC = () => {
           <IonItem>
             <IonIcon icon={moonOutline} slot="start" />
             <IonLabel>Dark Mode</IonLabel>
-            <IonToggle slot="end" />
+            <IonToggle 
+              slot="end" 
+              checked={isDarkMode}
+              onIonChange={toggleDarkMode}
+            />
           </IonItem>
 
           <IonItem>
@@ -95,7 +151,7 @@ const More: React.FC = () => {
             <IonLabel>Settings</IonLabel>
           </IonItem>
 
-          <IonItem className="logout-item">
+          <IonItem className="logout-item" onClick={handleLogout}>
             <IonIcon icon={logOutOutline} slot="start" color="danger" />
             <IonLabel color="danger">Log Out</IonLabel>
           </IonItem>
