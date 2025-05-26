@@ -20,6 +20,12 @@
   background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
   color: white;
 }
+.purpleNavBar{
+  color: blue;
+}
+.darkText{
+  color: rgb(6, 6, 6);
+}
 .colorWhite{
   color: white;
 }

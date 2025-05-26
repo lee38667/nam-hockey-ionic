@@ -35,11 +35,7 @@ const Home: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Namibia Hockey</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+    
 
       <IonContent fullscreen>
         <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>

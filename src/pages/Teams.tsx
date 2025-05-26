@@ -19,6 +19,7 @@ import {
   IonCol,
   IonChip,
   IonAvatar,
+  IonIcon,
   RefresherCustomEvent
 } from '@ionic/react';
 import { trophyOutline, peopleOutline, statsChartOutline } from 'ionicons/icons';
@@ -66,21 +67,21 @@ const Teams: React.FC = () => {
               <IonRow>
                 <IonCol size="4">
                   <div className="stat-item">
-                    <trophyOutline />
+                    <IonIcon icon={trophyOutline} />
                     <span>3</span>
                     <small>Titles</small>
                   </div>
                 </IonCol>
                 <IonCol size="4">
                   <div className="stat-item">
-                    <peopleOutline />
+                    <IonIcon icon={peopleOutline} />
                     <span>25</span>
                     <small>Players</small>
                   </div>
                 </IonCol>
                 <IonCol size="4">
                   <div className="stat-item">
-                    <statsChartOutline />
+                    <IonIcon icon={statsChartOutline} />
                     <span>85%</span>
                     <small>Win Rate</small>
                   </div>
