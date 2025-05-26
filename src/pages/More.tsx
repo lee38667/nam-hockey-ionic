@@ -26,12 +26,15 @@ import {
   languageOutline
 } from 'ionicons/icons';
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import './More.css';
+
 
 const More: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [presentAlert] = useIonAlert();
   const [presentToast] = useIonToast();
+  const history = useHistory();
 
   useEffect(() => {
     // Check system preference for dark mode
@@ -63,10 +66,8 @@ const More: React.FC = () => {
         {
           text: 'Logout',
           handler: () => {
-            // Add your logout logic here
-            // For example: clear local storage, redirect to login, etc.
             localStorage.clear();
-            window.location.href = '/login';
+            history.push('/login');
             presentToast({
               message: 'Logged out successfully',
               duration: 2000,

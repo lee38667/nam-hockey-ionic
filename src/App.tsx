@@ -7,7 +7,8 @@ import {
   IonTabBar,
   IonTabButton,
   IonTabs,
-  setupIonicReact
+  setupIonicReact,
+  IonContent
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import {
@@ -17,6 +18,8 @@ import {
   newspaperOutline,
   menuOutline
 } from 'ionicons/icons';
+import { useEffect, useState } from 'react';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -54,63 +57,108 @@ import Matches from './pages/Matches';
 import Teams from './pages/Teams';
 import News from './pages/News';
 import More from './pages/More';
+import LoginPage from './pages/LoginPage';
 
 setupIonicReact();
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
-          <Route exact path="/home">
-            <Home />
-          </Route>
-          <Route exact path="/matches">
-            <Matches />
-          </Route>
-          <Route exact path="/teams">
-            <Teams />
-          </Route>
-          <Route exact path="/news">
-            <News />
-          </Route>
-          <Route exact path="/more">
-            <More />
-          </Route>
-          <Route exact path="/">
-            <Redirect to="/home" />
-          </Route>
-        </IonRouterOutlet>
+const App: React.FC = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const auth = getAuth();
 
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="home" href="/home">
-            <IonIcon icon={homeOutline} />
-            <IonLabel>Home</IonLabel>
-          </IonTabButton>
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsAuthenticated(!!user);
+    });
 
-          <IonTabButton tab="matches" href="/matches">
-            <IonIcon icon={calendarOutline} />
-            <IonLabel>Matches</IonLabel>
-          </IonTabButton>
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, [auth]);
 
-          <IonTabButton tab="teams" href="/teams">
-            <IonIcon icon={peopleOutline} />
-            <IonLabel>Teams</IonLabel>
-          </IonTabButton>
+  // Show loading state while checking authentication
+  if (isAuthenticated === null) {
+    return (
+      <IonApp>
+        <IonContent className="ion-padding">
+          <div className="ion-text-center">
+            <h2>Loading...</h2>
+          </div>
+        </IonContent>
+      </IonApp>
+    );
+  }
 
-          <IonTabButton tab="news" href="/news">
-            <IonIcon icon={newspaperOutline} />
-            <IonLabel>News</IonLabel>
-          </IonTabButton>
+  return (
+    <IonApp>
+      <IonReactRouter>
+        {isAuthenticated ? (
+          <IonTabs>
+            <IonRouterOutlet>
+              <Route exact path="/home">
+                <Home />
+              </Route>
+              <Route exact path="/matches">
+                <Matches />
+              </Route>
+              <Route exact path="/teams">
+                <Teams />
+              </Route>
+              <Route exact path="/news">
+                <News />
+              </Route>
+              <Route exact path="/more">
+                <More />
+              </Route>
+              <Route exact path="/">
+                <Redirect to="/home" />
+              </Route>
+              <Route>
+                <Redirect to="/home" />
+              </Route>
+            </IonRouterOutlet>
 
-          <IonTabButton tab="more" href="/more">
-            <IonIcon icon={menuOutline} />
-            <IonLabel>More</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
-  </IonApp>
-);
+            <IonTabBar slot="bottom">
+              <IonTabButton tab="home" href="/home">
+                <IonIcon icon={homeOutline} />
+                <IonLabel>Home</IonLabel>
+              </IonTabButton>
+
+              <IonTabButton tab="matches" href="/matches">
+                <IonIcon icon={calendarOutline} />
+                <IonLabel>Matches</IonLabel>
+              </IonTabButton>
+
+              <IonTabButton tab="teams" href="/teams">
+                <IonIcon icon={peopleOutline} />
+                <IonLabel>Teams</IonLabel>
+              </IonTabButton>
+
+              <IonTabButton tab="news" href="/news">
+                <IonIcon icon={newspaperOutline} />
+                <IonLabel>News</IonLabel>
+              </IonTabButton>
+
+              <IonTabButton tab="more" href="/more">
+                <IonIcon icon={menuOutline} />
+                <IonLabel>More</IonLabel>
+              </IonTabButton>
+            </IonTabBar>
+          </IonTabs>
+        ) : (
+          <IonRouterOutlet>
+            <Route exact path="/login">
+              <LoginPage />
+            </Route>
+            <Route exact path="/">
+              <Redirect to="/login" />
+            </Route>
+            <Route>
+              <Redirect to="/login" />
+            </Route>
+          </IonRouterOutlet>
+        )}
+      </IonReactRouter>
+    </IonApp>
+  );
+};
 
 export default App;

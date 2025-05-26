@@ -61,13 +61,13 @@ const Home: React.FC = () => {
             <IonCol size="12" sizeMd="6" sizeLg="4">
               <IonCard className="quick-access-card">
                 <IonCardHeader>
-                  <IonCardTitle>Today's Matches</IonCardTitle>
+                  <IonCardTitle className="colorWhite">Today's Matches</IonCardTitle>
                 </IonCardHeader>
                 <IonCardContent>
-                  <div className="match-preview">
-                    <div className="team">Team A</div>
-                    <div className="score">2 - 1</div>
-                    <div className="team">Team B</div>
+                  <div className="match-preview" style={{ color: 'white' }}>
+                    <div className="team" style={{ color: 'white' }}>Team A</div>
+                    <div className="score" style={{ color: 'white' }}>2 - 1</div>
+                    <div className="team" style={{ color: 'white' }}>Team B</div>
                   </div>
                 </IonCardContent>
               </IonCard>
@@ -76,10 +76,10 @@ const Home: React.FC = () => {
             <IonCol size="12" sizeMd="6" sizeLg="4">
               <IonCard className="quick-access-card">
                 <IonCardHeader>
-                  <IonCardTitle>Latest News</IonCardTitle>
+                  <IonCardTitle className="colorWhite">Latest News</IonCardTitle>
                 </IonCardHeader>
                 <IonCardContent>
-                  <div className="news-preview">
+                  <div className="news-preview" style={{ color: 'white' }}>
                     <h3>National Team Qualifies for Championship</h3>
                     <p>Read more about this exciting achievement...</p>
                   </div>
@@ -90,10 +90,10 @@ const Home: React.FC = () => {
             <IonCol size="12" sizeMd="6" sizeLg="4">
               <IonCard className="quick-access-card">
                 <IonCardHeader>
-                  <IonCardTitle>League Standings</IonCardTitle>
+                  <IonCardTitle className="colorWhite">League Standings</IonCardTitle>
                 </IonCardHeader>
                 <IonCardContent>
-                  <table className="league-table">
+                  <table className="league-table" style={{ color: 'white' }}>
                     <thead>
                       <tr>
                         <th>Pos</th>

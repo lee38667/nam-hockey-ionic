@@ -280,7 +280,7 @@ body.dark {
 
 /* Global Styles */
 ion-content {
-  --background: var(--ion-color-light);
+  --background: #133065;
 }
 
 ion-toolbar {

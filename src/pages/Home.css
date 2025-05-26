@@ -20,7 +20,9 @@
   background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
   color: white;
 }
-
+.colorWhite{
+  color: white;
+}
 .hero-overlay h1 {
   margin: 0;
   font-size: 24px;
@@ -116,7 +118,7 @@
 /* Dark Mode Support */
 @media (prefers-color-scheme: dark) {
   .quick-access-card {
-    --background: #2a2a2a;
+    --background: #0e1129;
   }
 
   .league-table th {
