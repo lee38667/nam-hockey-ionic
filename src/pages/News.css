@@ -5,7 +5,9 @@
   top: 0;
   z-index: 100;
 }
-
+colorPurple {
+  color:#15144e
+}
 .news-search {
   --background: white;
   --border-radius: 8px;
@@ -27,6 +29,7 @@
 
 .featured-news ion-card-header {
   padding: 16px;
+  
 }
 
 .featured-news ion-card-title {
@@ -125,4 +128,10 @@
   .news-item h2 {
     color: var(--ion-color-light);
   }
+}
+
+.small-chip {
+  --height: 24px;
+  font-size: 12px;
+  margin: 0;
 } 

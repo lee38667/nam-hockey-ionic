@@ -91,7 +91,7 @@ const News: React.FC = () => {
               <div className="news-meta">
                 <IonIcon icon={timeOutline} />
                 <span>5 hours ago</span>
-                <IonChip color="primary" size="small">League</IonChip>
+                <IonChip color="primary" className="small-chip">League</IonChip>
               </div>
             </IonLabel>
           </IonItem>
@@ -106,7 +106,7 @@ const News: React.FC = () => {
               <div className="news-meta">
                 <IonIcon icon={timeOutline} />
                 <span>1 day ago</span>
-                <IonChip color="success" size="small">Development</IonChip>
+                <IonChip color="success" className="small-chip">Development</IonChip>
               </div>
             </IonLabel>
           </IonItem>
@@ -121,7 +121,7 @@ const News: React.FC = () => {
               <div className="news-meta">
                 <IonIcon icon={timeOutline} />
                 <span>2 days ago</span>
-                <IonChip color="warning" size="small">Facilities</IonChip>
+                <IonChip color="warning" className="small-chip">Facilities</IonChip>
               </div>
             </IonLabel>
           </IonItem>

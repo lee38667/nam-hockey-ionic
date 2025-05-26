@@ -8,7 +8,9 @@ import {
   IonTabButton,
   IonTabs,
   setupIonicReact,
-  IonContent
+  IonContent,
+  IonHeader,
+  IonToolbar
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import {
@@ -20,6 +22,7 @@ import {
 } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import RotatingLogo from './components/RotatingLogo';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -59,6 +62,9 @@ import Teams from './pages/Teams';
 import News from './pages/News';
 import More from './pages/More';
 import LoginPage from './pages/LoginPage';
+import RegisterTeam from './pages/RegisterTeam';
+import RegisterPlayer from './pages/RegisterPlayer';
+import AddNews from './pages/AddNews';
 
 setupIonicReact({
   mode: 'ios'
@@ -100,6 +106,11 @@ const App: React.FC = () => {
 
   return (
     <IonApp>
+      <IonHeader>
+        <IonToolbar>
+          <RotatingLogo />
+        </IonToolbar>
+      </IonHeader>
       <IonReactRouter>
         {isAuthenticated ? (
           <IonTabs>
@@ -118,6 +129,15 @@ const App: React.FC = () => {
               </Route>
               <Route exact path="/more">
                 <More />
+              </Route>
+              <Route exact path="/register-team">
+                <RegisterTeam />
+              </Route>
+              <Route exact path="/register-player">
+                <RegisterPlayer />
+              </Route>
+              <Route exact path="/add-news">
+                <AddNews />
               </Route>
               <Route exact path="/">
                 <Redirect to="/home" />

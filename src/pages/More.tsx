@@ -23,10 +23,14 @@ import {
   informationCircleOutline,
   logOutOutline,
   moonOutline,
-  languageOutline
+  languageOutline,
+  peopleOutline,
+  personAddOutline,
+  newspaperOutline
 } from 'ionicons/icons';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { getAuth, signOut } from 'firebase/auth';
 import './More.css';
 
 
@@ -35,6 +39,7 @@ const More: React.FC = () => {
   const [presentAlert] = useIonAlert();
   const [presentToast] = useIonToast();
   const history = useHistory();
+  const auth = getAuth();
 
   useEffect(() => {
     // Check system preference for dark mode
@@ -54,29 +59,13 @@ const More: React.FC = () => {
     });
   };
 
-  const handleLogout = () => {
-    presentAlert({
-      header: 'Logout',
-      message: 'Are you sure you want to logout?',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel'
-        },
-        {
-          text: 'Logout',
-          handler: () => {
-            localStorage.clear();
-            history.push('/login');
-            presentToast({
-              message: 'Logged out successfully',
-              duration: 2000,
-              position: 'bottom'
-            });
-          }
-        }
-      ]
-    });
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      history.push('/login');
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
   };
 
   return (
@@ -150,6 +139,21 @@ const More: React.FC = () => {
           <IonItem>
             <IonIcon icon={settingsOutline} slot="start" />
             <IonLabel>Settings</IonLabel>
+          </IonItem>
+
+          <IonItem button onClick={() => history.push('/register-team')}>
+            <IonIcon icon={peopleOutline} slot="start" />
+            <IonLabel>Register Team</IonLabel>
+          </IonItem>
+
+          <IonItem button onClick={() => history.push('/register-player')}>
+            <IonIcon icon={personAddOutline} slot="start" />
+            <IonLabel>Register Player</IonLabel>
+          </IonItem>
+
+          <IonItem button onClick={() => history.push('/add-news')}>
+            <IonIcon icon={newspaperOutline} slot="start" />
+            <IonLabel>Add News/Event</IonLabel>
           </IonItem>
 
           <IonItem className="logout-item" onClick={handleLogout}>

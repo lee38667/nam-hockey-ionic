@@ -45,10 +45,7 @@ const Matches: React.FC = () => {
 
         {/* Search and Filter Section */}
         <div className="matches-header">
-          <IonSearchbar
-            placeholder="Search matches..."
-            className="matches-search"
-          />
+        
           <IonSegment value="upcoming" className="matches-segment">
             <IonSegmentButton value="upcoming">
               <IonLabel>Upcoming</IonLabel>

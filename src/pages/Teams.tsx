@@ -44,15 +44,6 @@ const Teams: React.FC = () => {
         <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
           <IonRefresherContent></IonRefresherContent>
         </IonRefresher>
-
-        {/* Search Section */}
-        <div className="teams-header">
-          <IonSearchbar
-            placeholder="Search teams..."
-            className="teams-search"
-          />
-        </div>
-
         {/* Featured Team */}
         <IonCard className="featured-team">
           <div className="team-banner">
@@ -65,27 +56,21 @@ const Teams: React.FC = () => {
           <IonCardContent>
             <IonGrid>
               <IonRow>
-                <IonCol size="4">
+                <IonCol size="5">
                   <div className="stat-item">
                     <IonIcon icon={trophyOutline} />
                     <span>3</span>
                     <small>Titles</small>
                   </div>
                 </IonCol>
-                <IonCol size="4">
+                <IonCol size="7">
                   <div className="stat-item">
                     <IonIcon icon={peopleOutline} />
                     <span>25</span>
                     <small>Players</small>
                   </div>
                 </IonCol>
-                <IonCol size="4">
-                  <div className="stat-item">
-                    <IonIcon icon={statsChartOutline} />
-                    <span>85%</span>
-                    <small>Win Rate</small>
-                  </div>
-                </IonCol>
+              
               </IonRow>
             </IonGrid>
           </IonCardContent>
@@ -101,7 +86,7 @@ const Teams: React.FC = () => {
               <h2>Team A</h2>
               <p>Division 1 • 15 Players</p>
             </IonLabel>
-            <IonChip color="primary" slot="end">Active</IonChip>
+            <IonChip className='colorWhite' slot="end">Active</IonChip>
           </IonItem>
 
           <IonItem className="team-item">
@@ -112,7 +97,7 @@ const Teams: React.FC = () => {
               <h2>Team B</h2>
               <p>Premier League • 20 Players</p>
             </IonLabel>
-            <IonChip color="success" slot="end">Champion</IonChip>
+            <IonChip color="success" className='colorWhite' slot="end">Champion</IonChip>
           </IonItem>
 
           <IonItem className="team-item">
