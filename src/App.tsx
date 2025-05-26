@@ -22,7 +22,7 @@ import {
 } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import RotatingLogo from './components/RotatingLogo';
+// import RotatingLogo from './components/RotatingLogo';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -106,11 +106,7 @@ const App: React.FC = () => {
 
   return (
     <IonApp>
-      <IonHeader>
-        <IonToolbar>
-          <RotatingLogo />
-        </IonToolbar>
-      </IonHeader>
+     
       <IonReactRouter>
         {isAuthenticated ? (
           <IonTabs>

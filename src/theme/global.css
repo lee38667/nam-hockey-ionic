@@ -92,8 +92,82 @@ ion-button {
   --ion-toolbar-background: #2d2d2d;
   --ion-tab-bar-background: #2d2d2d;
   --ion-item-background: #2d2d2d;
+  --ion-text-color: #ffffff;
+  --ion-text-color-rgb: 255, 255, 255;
+  --ion-color-step-50: #333333;
+  --ion-color-step-100: #404040;
+  --ion-color-step-150: #4d4d4d;
+  --ion-color-step-200: #595959;
+  --ion-color-step-250: #666666;
+  --ion-color-step-300: #737373;
+  --ion-color-step-350: #808080;
+  --ion-color-step-400: #8c8c8c;
+  --ion-color-step-450: #999999;
+  --ion-color-step-500: #a6a6a6;
+  --ion-color-step-550: #b3b3b3;
+  --ion-color-step-600: #bfbfbf;
+  --ion-color-step-650: #cccccc;
+  --ion-color-step-700: #d9d9d9;
+  --ion-color-step-750: #e6e6e6;
+  --ion-color-step-800: #f2f2f2;
+  --ion-color-step-850: #ffffff;
+  --ion-color-step-900: #ffffff;
+  --ion-color-step-950: #ffffff;
 }
 
 .dark-theme ion-card {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}
+
+.dark-theme h1,
+.dark-theme h2,
+.dark-theme h3,
+.dark-theme h4,
+.dark-theme h5,
+.dark-theme h6,
+.dark-theme p,
+.dark-theme ion-label,
+.dark-theme ion-text {
+  color: #ffffff;
+}
+
+.dark-theme ion-icon {
+  color: #fdfdfd; /* Default icon color */
+}
+
+/* Custom colors for specific icons */
+.dark-theme ion-icon[name="home-outline"],
+.dark-theme ion-icon[name="calendar-outline"],
+.dark-theme ion-icon[name="people-outline"],
+.dark-theme ion-icon[name="newspaper-outline"],
+.dark-theme ion-icon[name="menu-outline"] {
+  color: #3880ff; /* Primary blue color for tab bar icons */
+}
+
+.dark-theme ion-icon[name="time-outline"],
+.dark-theme ion-icon[name="share-outline"],
+.dark-theme ion-icon[name="bookmark-outline"] {
+  color: #3dc2ff; /* Secondary blue color for action icons */
+}
+
+.dark-theme ion-icon[name="trophy-outline"],
+.dark-theme ion-icon[name="stats-chart-outline"] {
+  color: #2dd36f; /* Success green color for stats icons */
+}
+
+.dark-theme ion-item {
+  --color: #ffffff;
+}
+
+.dark-theme ion-searchbar {
+  --color: #ffffff;
+  --placeholder-color: #a6a6a6;
+}
+
+.dark-theme ion-chip {
+  --color: #ffffff;
+}
+
+.dark-theme ion-button {
+  --color: #ffffff;
 } 

@@ -14,20 +14,49 @@ import {
   IonBadge,
   IonSegment,
   IonSegmentButton,
-  IonSearchbar,
   IonRefresher,
   IonRefresherContent,
   RefresherCustomEvent,
-  IonIcon
+  IonIcon,
+  IonSpinner
 } from '@ionic/react';
 import { calendarOutline, locationOutline, timeOutline } from 'ionicons/icons';
+import { useEffect, useState } from 'react';
+import { Match, subscribeToMatches } from '../firebase/matchService';
 import './Matches.css';
 
 const Matches: React.FC = () => {
+  const [selectedSegment, setSelectedSegment] = useState<'upcoming' | 'live' | 'past'>('upcoming');
+  const [matches, setMatches] = useState<Match[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    
+    // Subscribe to matches for the selected status
+    const unsubscribe = subscribeToMatches(selectedSegment, (matchesData) => {
+      setMatches(matchesData);
+      setLoading(false);
+    });
+
+    // Cleanup subscription on unmount or when segment changes
+    return () => unsubscribe();
+  }, [selectedSegment]);
+
   const handleRefresh = (event: RefresherCustomEvent) => {
-    setTimeout(() => {
-      event.detail.complete();
-    }, 2000);
+    // The data will automatically refresh through the subscription
+    event.detail.complete();
+  };
+
+  const formatDate = (timestamp: any) => {
+    const date = timestamp.toDate();
+    return date.toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
   };
 
   return (
@@ -43,10 +72,12 @@ const Matches: React.FC = () => {
           <IonRefresherContent></IonRefresherContent>
         </IonRefresher>
 
-        {/* Search and Filter Section */}
         <div className="matches-header">
-        
-          <IonSegment value="upcoming" className="matches-segment">
+          <IonSegment 
+            value={selectedSegment} 
+            onIonChange={e => setSelectedSegment(e.detail.value as 'upcoming' | 'live' | 'past')}
+            className="matches-segment"
+          >
             <IonSegmentButton value="upcoming">
               <IonLabel>Upcoming</IonLabel>
             </IonSegmentButton>
@@ -59,93 +90,71 @@ const Matches: React.FC = () => {
           </IonSegment>
         </div>
 
-        {/* Matches List */}
-        <IonList>
-          {/* Live Match */}
-          <IonCard className="match-card live">
-            <IonCardHeader>
-              <IonCardTitle>
-                <div className="match-header">
-                  <span>Premier League</span>
-                  <IonBadge color="danger">LIVE</IonBadge>
-                </div>
-              </IonCardTitle>
-            </IonCardHeader>
-            <IonCardContent>
-              <div className="match-content">
-                <div className="team">
-                  <img src="/src/pages/images/CloseUpHockey.jpg" alt="Team A" />
-                  <span>Team A</span>
-                </div>
-                <div className="score">
-                  <span>2</span>
-                  <span>-</span>
-                  <span>1</span>
-                </div>
-                <div className="team">
-                  <img src="/src/pages/images/CloseUpHockey.jpg" alt="Team B" />
-                  <span>Team B</span>
-                </div>
-              </div>
-              <div className="match-details">
-                <IonItem lines="none">
-                  <IonLabel>
-                    <div className="detail-item">
-                      <IonIcon icon={calendarOutline} />
-                      <span>Today, 15:00</span>
+        {loading ? (
+          <div className="loading-container">
+            <IonSpinner name="crescent" />
+          </div>
+        ) : (
+          <IonList>
+            {matches.map(match => (
+              <IonCard key={match.id} className={`match-card ${match.status}`}>
+                <IonCardHeader>
+                  <IonCardTitle>
+                    <div className="match-header">
+                      <span>{match.league}</span>
+                      {match.status === 'live' && (
+                        <IonBadge color="danger">LIVE</IonBadge>
+                      )}
+                      {match.status === 'upcoming' && (
+                        <IonBadge color="primary">{formatDate(match.date)}</IonBadge>
+                      )}
                     </div>
-                  </IonLabel>
-                </IonItem>
-                <IonItem lines="none">
-                  <IonLabel>
-                    <div className="detail-item">
-                      <IonIcon icon={locationOutline} />
-                      <span>National Hockey Stadium</span>
+                  </IonCardTitle>
+                </IonCardHeader>
+                <IonCardContent>
+                  <div className="match-content">
+                    <div className="team">
+                      <img 
+                        src={match.homeTeamImage || '/src/pages/images/CloseUpHockey.jpg'} 
+                        alt={match.homeTeam} 
+                      />
+                      <span>{match.homeTeam}</span>
                     </div>
-                  </IonLabel>
-                </IonItem>
-              </div>
-            </IonCardContent>
-          </IonCard>
-
-          {/* Upcoming Match */}
-          <IonCard className="match-card">
-            <IonCardHeader>
-              <IonCardTitle>
-                <div className="match-header">
-                  <span>Division 1</span>
-                  <IonBadge color="primary">Tomorrow</IonBadge>
-                </div>
-              </IonCardTitle>
-            </IonCardHeader>
-            <IonCardContent>
-              <div className="match-content">
-                <div className="team">
-                  <img src="/src/pages/images/CloseUpHockey.jpg" alt="Team C" />
-                  <span>Team C</span>
-                </div>
-                <div className="time">
-                  <IonIcon icon={timeOutline} />
-                  <span>14:00</span>
-                </div>
-                <div className="team">
-                  <img src="/src/pages/images/CloseUpHockey.jpg" alt="Team D" />
-                  <span>Team D</span>
-                </div>
-              </div>
-              <div className="match-details">
-                <IonItem lines="none">
-                  <IonLabel>
-                    <div className="detail-item">
-                      <IonIcon icon={locationOutline} />
-                      <span>City Sports Complex</span>
+                    {match.status === 'live' || match.status === 'past' ? (
+                      <div className="score">
+                        <span>{match.homeScore}</span>
+                        <span>-</span>
+                        <span>{match.awayScore}</span>
+                      </div>
+                    ) : (
+                      <div className="time">
+                        <IonIcon icon={timeOutline} />
+                        <span>{formatDate(match.date)}</span>
+                      </div>
+                    )}
+                    <div className="team">
+                      <img 
+                        src={match.awayTeamImage || '/src/pages/images/CloseUpHockey.jpg'} 
+                        alt={match.awayTeam} 
+                      />
+                      <span>{match.awayTeam}</span>
                     </div>
-                  </IonLabel>
-                </IonItem>
-              </div>
-            </IonCardContent>
-          </IonCard>
-        </IonList>
+                  </div>
+                  <div className="match-details">
+                    <IonItem lines="none">
+                      <IonLabel>
+                        <div className="detail-item">
+                          <IonIcon icon={locationOutline} />
+                          <span>{match.location}</span>
+                        </div>
+                      </IonLabel>
+                    </IonItem>
+                  </div>
+                </IonCardContent>
+              </IonCard>
+            ))}
+          </IonList>
+        )}
       </IonContent>
     </IonPage>
   );

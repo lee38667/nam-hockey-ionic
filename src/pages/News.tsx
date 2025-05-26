@@ -51,7 +51,7 @@ const News: React.FC = () => {
         </div>
 
         {/* Featured News */}
-        <IonCard className="featured-news">
+        <IonCard className="featured-news" color="primary-tint" >
           <img src="/src/pages/images/hockey-players.jpg" alt="Featured News" />
           <IonCardHeader>
             <IonChip color="primary">Featured</IonChip>
