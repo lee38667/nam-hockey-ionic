@@ -50,6 +50,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import './theme/global.css';
 
 /* Pages */
 import Home from './pages/Home';
@@ -59,16 +60,26 @@ import News from './pages/News';
 import More from './pages/More';
 import LoginPage from './pages/LoginPage';
 
-setupIonicReact();
+setupIonicReact({
+  mode: 'ios'
+});
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   const auth = getAuth();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setIsAuthenticated(!!user);
     });
+
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      setIsDarkMode(true);
+      document.body.classList.add('dark-theme');
+    }
 
     // Cleanup subscription on unmount
     return () => unsubscribe();
