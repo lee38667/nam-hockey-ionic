@@ -79,9 +79,13 @@ const AddTeamModal: React.FC<AddTeamModalProps> = ({ isOpen, onClose }) => {
         division,
         status,
         playerCount: players.length,
-        imageUrl: imageUrl || undefined,
-        bannerUrl: bannerUrl || undefined,
-        description: description || undefined
+        imageUrl: imageUrl || null,
+        bannerUrl: bannerUrl || null,
+        description: description || null,
+        points: 0,
+        titles: 0,
+        recentResults: [],
+        upcomingFixtures: []
       });
 
       // Add all players

@@ -28,6 +28,7 @@ import {
 import { trophyOutline, peopleOutline, statsChartOutline, add } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 import { Team, subscribeToTeams } from '../firebase/teamService';
+import { getPlayerStats } from '../firebase/playerService';
 import './Teams.css';
 import { useHistory } from 'react-router-dom';
 import AddTeamModal from '../components/AddTeamModal';
@@ -36,12 +37,21 @@ const Teams: React.FC = () => {
   const [teams, setTeams] = useState<Team[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
+  const [teamStats, setTeamStats] = useState<{[key: string]: any}>({});
   const history = useHistory();
   const [showAddTeam, setShowAddTeam] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = subscribeToTeams((teamsData) => {
+    const unsubscribe = subscribeToTeams(async (teamsData) => {
       setTeams(teamsData);
+      // Get stats for each team
+      const stats: {[key: string]: any} = {};
+      for (const team of teamsData) {
+        if (team.id) {
+          stats[team.id] = await getPlayerStats(team.id);
+        }
+      }
+      setTeamStats(stats);
       setLoading(false);
     });
 
@@ -115,7 +125,7 @@ const Teams: React.FC = () => {
                       <IonCol size="7">
                         <div className="stat-item">
                           <IonIcon icon={peopleOutline} />
-                          <span>{featuredTeam.playerCount}</span>
+                          <span>{teamStats[featuredTeam.id!]?.totalPlayers || 0}</span>
                           <small>Players</small>
                         </div>
                       </IonCol>
@@ -142,7 +152,7 @@ const Teams: React.FC = () => {
                   </IonAvatar>
                   <IonLabel>
                     <h2>{team.name}</h2>
-                    <p>{team.division} • {team.playerCount} Players</p>
+                    <p>{team.division} • {teamStats[team.id!]?.totalPlayers || 0} Players</p>
                   </IonLabel>
                   <IonChip 
                     color={

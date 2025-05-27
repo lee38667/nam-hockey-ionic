@@ -63,46 +63,37 @@ const News: React.FC = () => {
           <IonRefresherContent></IonRefresherContent>
         </IonRefresher>
 
-        {/* Search Section */}
-        <div className="news-header">
-          <IonSearchbar
-            placeholder="Search news..."
-            className="news-search"
-          />
-        </div>
-
         {/* Featured News */}
-        <IonCard className="featured-news" color="primary-tint" >
-          <img src="/src/pages/images/hockey-players.jpg" alt="Featured News" />
-          <IonCardHeader>
-            <IonChip color="primary">Featured</IonChip>
-            <IonCardTitle>National Team Qualifies for Championship</IonCardTitle>
-            <IonCardSubtitle>
-              <IonIcon icon={timeOutline} />
-              <span>2 hours ago</span>
-            </IonCardSubtitle>
-          </IonCardHeader>
-          <IonCardContent>
-            <p>
-              The Namibian national hockey team has secured their place in the upcoming
-              international championship after an impressive performance in the qualifiers.
-            </p>
-            <div className="news-actions">
-              <IonChip color="medium" outline>
-                <IonIcon icon={shareOutline} />
-                <span>Share</span>
-              </IonChip>
-              <IonChip color="medium" outline>
-                <IonIcon icon={bookmarkOutline} />
-                <span>Save</span>
-              </IonChip>
-            </div>
-          </IonCardContent>
-        </IonCard>
+        {news.length > 0 && (
+          <IonCard className="featured-news" color="primary-tint" >
+            <img src={news[0].imageUrl || "/src/pages/images/hockey-players.jpg"} alt="Featured News" />
+            <IonCardHeader>
+              <IonChip color="primary">Latest</IonChip>
+              <IonCardTitle>{news[0].title}</IonCardTitle>
+              <IonCardSubtitle>
+                <IonIcon icon={timeOutline} />
+                <span>{news[0].createdAt?.toDate().toLocaleDateString()}</span>
+              </IonCardSubtitle>
+            </IonCardHeader>
+            <IonCardContent>
+              <p>{news[0].content}</p>
+              <div className="news-actions">
+                <IonChip color="medium" outline>
+                  <IonIcon icon={shareOutline} />
+                  <span>Share</span>
+                </IonChip>
+                <IonChip color="medium" outline>
+                  <IonIcon icon={bookmarkOutline} />
+                  <span>Save</span>
+                </IonChip>
+              </div>
+            </IonCardContent>
+          </IonCard>
+        )}
 
         {/* News List */}
         <IonList>
-          {news.map((item) => (
+          {news.slice(1).map((item) => (
             <IonItem key={item.id}>
               <IonLabel>
                 <h2>{item.title}</h2>
@@ -114,7 +105,7 @@ const News: React.FC = () => {
                   <IonLabel>{item.authorName}</IonLabel>
                 </IonChip>
                 <IonText color="medium">
-                  <p>{new Date(item.timestamp).toLocaleDateString()}</p>
+                  <p>{item.createdAt?.toDate().toLocaleDateString()}</p>
                 </IonText>
               </IonLabel>
             </IonItem>

@@ -17,9 +17,11 @@ import {
   IonCardContent,
   IonIcon,
   IonText,
-  useIonToast
+  useIonToast,
+  IonRouterOutlet,
+  createAnimation
 } from '@ionic/react';
-import { personCircleOutline, lockClosedOutline } from 'ionicons/icons';
+import { lockClosedOutline } from 'ionicons/icons';
 import { login } from '../firebase/firebaseAuth';
 import { useHistory } from 'react-router-dom';
 import { SplashScreen } from '@capacitor/splash-screen';
@@ -59,9 +61,32 @@ const LoginPage: React.FC = () => {
     }
   };
 
+  const handleNavigation = (path: string) => {
+    const animation = createAnimation()
+      .addElement(document.querySelector('.login-card')!)
+      .duration(300)
+      .easing('ease-out')
+      .fromTo('opacity', '1', '0')
+      .fromTo('transform', 'translateY(0)', 'translateY(-20px)');
+
+    animation.play().then(() => {
+      history.push(path);
+    });
+  };
+
   useEffect(() => {
     // Hide the splash screen after the app is ready
     SplashScreen.hide();
+
+    // Add entrance animation
+    const entranceAnimation = createAnimation()
+      .addElement(document.querySelector('.login-card')!)
+      .duration(500)
+      .easing('ease-out')
+      .fromTo('opacity', '0', '1')
+      .fromTo('transform', 'translateY(20px)', 'translateY(0)');
+
+    entranceAnimation.play();
   }, []); // Run once on component mount
 
   return (
@@ -78,39 +103,36 @@ const LoginPage: React.FC = () => {
               <IonCard className="login-card">
                 <IonCardContent>
                   <div className="ion-text-center ion-padding">
-                    <IonIcon
-                      icon={personCircleOutline}
-                      style={{ fontSize: '64px', color: 'var(--ion-color-primary)' }}
+                    <img 
+                      src="/src/pages/images/SplashScreen.png" 
+                      alt="Namibia Hockey Logo" 
+                      className="login-logo"
                     />
                     <h2>Welcome Back</h2>
                     <p>Please sign in to continue</p>
                   </div>
 
-                  <IonItem className="ion-margin-bottom">
-                    <IonLabel position="floating">
-                      <IonIcon icon={personCircleOutline} className="ion-margin-end" />
-                      Email
-                    </IonLabel>
+                  <IonItem className="ion-margin-bottom custom-input">
+                    <IonLabel position="stacked">Email</IonLabel>
                     <IonInput
                       type="email"
                       value={email}
                       onIonChange={e => setEmail(e.detail.value!)}
                       placeholder="Enter your email"
                       disabled={isLoading}
+                      className="custom-input-field"
                     />
                   </IonItem>
 
-                  <IonItem className="ion-margin-bottom">
-                    <IonLabel position="floating">
-                      <IonIcon icon={lockClosedOutline} className="ion-margin-end" />
-                      Password
-                    </IonLabel>
+                  <IonItem className="ion-margin-bottom custom-input">
+                    <IonLabel position="stacked">Password</IonLabel>
                     <IonInput
                       type="password"
                       value={password}
                       onIonChange={e => setPassword(e.detail.value!)}
                       placeholder="Enter your password"
                       disabled={isLoading}
+                      className="custom-input-field"
                     />
                   </IonItem>
 
@@ -125,8 +147,15 @@ const LoginPage: React.FC = () => {
 
                   <div className="ion-text-center ion-margin-top">
                     <IonText color="medium">
-                      <p>Don't have an account? Contact administrator</p>
+                      <p>Don't have an account?</p>
                     </IonText>
+                    <IonButton 
+                      fill="clear" 
+                      onClick={() => handleNavigation('/register')}
+                      className="signup-button"
+                    >
+                      Sign Up
+                    </IonButton>
                   </div>
                 </IonCardContent>
               </IonCard>

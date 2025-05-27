@@ -66,6 +66,8 @@ import RegisterTeam from './pages/RegisterTeam';
 import RegisterPlayer from './pages/RegisterPlayer';
 import AddNews from './pages/AddNews';
 import TeamDetails from './pages/TeamDetails';
+import Register from './pages/Register';
+import Profile from './pages/Profile';
 
 setupIonicReact({
   mode: 'ios'
@@ -139,6 +141,9 @@ const App: React.FC = () => {
               <Route exact path="/add-news">
                 <AddNews />
               </Route>
+              <Route exact path="/profile">
+                <Profile />
+              </Route>
               <Route exact path="/">
                 <Redirect to="/home" />
               </Route>
@@ -178,6 +183,9 @@ const App: React.FC = () => {
           <IonRouterOutlet>
             <Route exact path="/login">
               <LoginPage />
+            </Route>
+            <Route exact path="/register">
+              <Register />
             </Route>
             <Route exact path="/">
               <Redirect to="/login" />

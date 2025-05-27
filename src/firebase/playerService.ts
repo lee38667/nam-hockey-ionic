@@ -7,8 +7,7 @@ import {
   updateDoc,
   doc,
   where,
-  getDocs,
-  increment
+  getDocs
 } from 'firebase/firestore';
 import { db } from './firebaseConfig';
 
@@ -46,31 +45,9 @@ export const subscribeToTeamPlayers = (teamId: string, callback: (players: Playe
 };
 
 export const addPlayer = async (teamId: string, player: Omit<Player, 'id' | 'teamId'>): Promise<string> => {
-  try {
-    // Add player
-    const playersRef = collection(db, 'players');
-    const playerData = {
-      ...player,
-      teamId,
-      stats: {
-        goals: 0,
-        assists: 0,
-        points: 0
-      }
-    };
-    const docRef = await addDoc(playersRef, playerData);
-
-    // Update team's player count
-    const teamRef = doc(db, 'teams', teamId);
-    await updateDoc(teamRef, {
-      playerCount: increment(1)
-    });
-
-    return docRef.id;
-  } catch (error) {
-    console.error('Error adding player:', error);
-    throw error;
-  }
+  const playersRef = collection(db, 'teams', teamId, 'players');
+  const docRef = await addDoc(playersRef, { ...player, teamId });
+  return docRef.id;
 };
 
 export const updatePlayer = async (teamId: string, playerId: string, updates: Partial<Player>): Promise<void> => {

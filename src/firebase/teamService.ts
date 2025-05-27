@@ -15,24 +15,24 @@ export interface Team {
   name: string;
   division: string;
   playerCount: number;
-  titles?: number;
+  titles: number;
   status: 'active' | 'champion' | 'promoted';
-  imageUrl?: string;
-  bannerUrl?: string;
-  description?: string;
-  recentResults?: {
+  imageUrl?: string | null;
+  bannerUrl?: string | null;
+  description?: string | null;
+  points: number;
+  recentResults: {
     id: string;
     opponent: string;
     score: string;
     date: string;
   }[];
-  upcomingFixtures?: {
+  upcomingFixtures: {
     id: string;
     opponent: string;
     date: string;
     time: string;
   }[];
-  points: number;
 }
 
 export const subscribeToTeams = (callback: (teams: Team[]) => void) => {
