@@ -1,9 +1,9 @@
 ion-content {
-  --background: #f5f5f5;
+  --background: #f7f7f7;
 }
 
 ion-item {
-  --background: #ffffff;
+  --background: #663535;
   --border-radius: 8px;
   margin-bottom: 16px;
   --padding-start: 16px;
@@ -53,7 +53,7 @@ ion-header ion-title {
 }
 
 ion-header ion-button {
-  --color: #3880ff;
+  --color: #ffffff;
 }
 
 /* Input focus states */
@@ -64,7 +64,7 @@ ion-item.item-has-focus {
 
 /* Placeholder styling */
 ion-input::part(placeholder) {
-  color: #999999;
+  color: #000000;
   opacity: 1;
 }
 

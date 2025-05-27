@@ -48,7 +48,7 @@ const LoginPage: React.FC = () => {
     setIsLoading(true);
     try {
       await login(email, password);
-      // Navigation will be handled by the auth state change in App.tsx
+      history.push('/home');
     } catch (error: any) {
       presentToast({
         message: error.message || 'Login failed. Please try again.',
