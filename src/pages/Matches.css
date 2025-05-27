@@ -146,7 +146,7 @@
   }
 
   .match-details {
-    border-top-color: #404040;
+    border-top-color: #ededed5e;
   }
 
   .team img {
@@ -166,6 +166,6 @@
   }
 
   .detail-item {
-    color: #a6a6a6;
+    color: #ffffff;
   }
 } 

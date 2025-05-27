@@ -161,7 +161,7 @@ ion-button {
 
   /* Ensure inputs and form elements are visible */
   ion-input, ion-textarea, ion-select {
-    --background: #2a2a2a;
+    --background: #ffffff;
     --color: var(--dark-color);
   }
 

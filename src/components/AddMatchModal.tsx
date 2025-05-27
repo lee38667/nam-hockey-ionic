@@ -126,7 +126,7 @@ const AddMatchModal: React.FC<AddMatchModalProps> = ({ isOpen, onClose }) => {
           </IonItem>
 
           <IonItem>
-            <IonLabel position="stacked">Status</IonLabel>
+            <IonLabel position="stacked" >Status</IonLabel>
             <IonSelect
               value={status}
               onIonChange={e => setStatus(e.detail.value)}

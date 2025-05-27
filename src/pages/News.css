@@ -16,6 +16,10 @@ colorPurple {
   --clear-button-color: #ffffff;
 
 }
+ion-item {
+  --background: #133065 !important; 
+
+}
 
 .featured-news {
   margin: 16px;
@@ -26,7 +30,7 @@ colorPurple {
 
 .featured-news img {
   width: 100%;
-  height: 200px;
+  height: 700px;
   object-fit: cover;
 }
 
@@ -98,15 +102,15 @@ colorPurple {
 /* Responsive Design */
 @media (max-width: 768px) {
   .featured-news img {
-    height: 150px;
+    height: 350px;
   }
 
   .featured-news ion-card-title {
-    font-size: 18px;
+    font-size: 38px;
   }
 
   .news-item h2 {
-    font-size: 15px;
+    font-size: 12px;
   }
 
   .news-item p {
