@@ -65,6 +65,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterTeam from './pages/RegisterTeam';
 import RegisterPlayer from './pages/RegisterPlayer';
 import AddNews from './pages/AddNews';
+import TeamDetails from './pages/TeamDetails';
 
 setupIonicReact({
   mode: 'ios'
@@ -114,11 +115,14 @@ const App: React.FC = () => {
               <Route exact path="/home">
                 <Home />
               </Route>
-              <Route exact path="/matches">
-                <Matches />
-              </Route>
               <Route exact path="/teams">
                 <Teams />
+              </Route>
+              <Route exact path="/team/:id">
+                <TeamDetails />
+              </Route>
+              <Route exact path="/matches">
+                <Matches />
               </Route>
               <Route exact path="/news">
                 <News />
@@ -149,14 +153,14 @@ const App: React.FC = () => {
                 <IonLabel>Home</IonLabel>
               </IonTabButton>
 
-              <IonTabButton tab="matches" href="/matches">
-                <IonIcon icon={calendarOutline} />
-                <IonLabel>Matches</IonLabel>
-              </IonTabButton>
-
               <IonTabButton tab="teams" href="/teams">
                 <IonIcon icon={peopleOutline} />
                 <IonLabel>Teams</IonLabel>
+              </IonTabButton>
+
+              <IonTabButton tab="matches" href="/matches">
+                <IonIcon icon={calendarOutline} />
+                <IonLabel>Matches</IonLabel>
               </IonTabButton>
 
               <IonTabButton tab="news" href="/news">

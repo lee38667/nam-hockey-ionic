@@ -18,17 +18,21 @@ import {
   IonRefresherContent,
   RefresherCustomEvent,
   IonIcon,
-  IonSpinner
+  IonSpinner,
+  IonFab,
+  IonFabButton
 } from '@ionic/react';
-import { calendarOutline, locationOutline, timeOutline } from 'ionicons/icons';
+import { calendarOutline, locationOutline, timeOutline, addOutline } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 import { Match, subscribeToMatches } from '../firebase/matchService';
+import AddMatchModal from '../components/AddMatchModal';
 import './Matches.css';
 
 const Matches: React.FC = () => {
   const [selectedSegment, setSelectedSegment] = useState<'upcoming' | 'live' | 'past'>('upcoming');
   const [matches, setMatches] = useState<Match[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -155,6 +159,17 @@ const Matches: React.FC = () => {
             ))}
           </IonList>
         )}
+
+        <IonFab vertical="bottom" horizontal="end" slot="fixed">
+          <IonFabButton onClick={() => setIsAddModalOpen(true)}>
+            <IonIcon icon={addOutline} />
+          </IonFabButton>
+        </IonFab>
+
+        <AddMatchModal 
+          isOpen={isAddModalOpen} 
+          onClose={() => setIsAddModalOpen(false)} 
+        />
       </IonContent>
     </IonPage>
   );

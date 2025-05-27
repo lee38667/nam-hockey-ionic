@@ -17,12 +17,33 @@ import {
   IonRefresherContent,
   IonChip,
   IonIcon,
-  RefresherCustomEvent
+  RefresherCustomEvent,
+  IonFab,
+  IonFabButton,
+  IonText,
+  IonAvatar
 } from '@ionic/react';
-import { timeOutline, shareOutline, bookmarkOutline } from 'ionicons/icons';
+import { timeOutline, shareOutline, bookmarkOutline, add } from 'ionicons/icons';
 import './News.css';
+import { useHistory } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { NewsItem, subscribeToNews } from '../firebase/newsService';
+
 
 const News: React.FC = () => {
+  const history = useHistory();
+  const [news, setNews] = useState<NewsItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = subscribeToNews((updatedNews) => {
+      setNews(updatedNews);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   const handleRefresh = (event: RefresherCustomEvent) => {
     setTimeout(() => {
       event.detail.complete();
@@ -33,7 +54,7 @@ const News: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>News</IonTitle>
+          <IonTitle>News & Events</IonTitle>
         </IonToolbar>
       </IonHeader>
 
@@ -81,51 +102,31 @@ const News: React.FC = () => {
 
         {/* News List */}
         <IonList>
-          <IonItem className="news-item">
-            <IonLabel>
-              <h2>League Season Kicks Off with Exciting Matches</h2>
-              <p>
-                The new season of the Namibian Hockey League has begun with some
-                thrilling opening matches...
-              </p>
-              <div className="news-meta">
-                <IonIcon icon={timeOutline} />
-                <span>5 hours ago</span>
-                <IonChip color="primary" className="small-chip">League</IonChip>
-              </div>
-            </IonLabel>
-          </IonItem>
-
-          <IonItem className="news-item">
-            <IonLabel>
-              <h2>Youth Development Program Launched</h2>
-              <p>
-                A new initiative to develop young hockey talent across Namibia has
-                been announced...
-              </p>
-              <div className="news-meta">
-                <IonIcon icon={timeOutline} />
-                <span>1 day ago</span>
-                <IonChip color="success" className="small-chip">Development</IonChip>
-              </div>
-            </IonLabel>
-          </IonItem>
-
-          <IonItem className="news-item">
-            <IonLabel>
-              <h2>New Training Facilities Open in Windhoek</h2>
-              <p>
-                State-of-the-art hockey training facilities have been inaugurated
-                in the capital city...
-              </p>
-              <div className="news-meta">
-                <IonIcon icon={timeOutline} />
-                <span>2 days ago</span>
-                <IonChip color="warning" className="small-chip">Facilities</IonChip>
-              </div>
-            </IonLabel>
-          </IonItem>
+          {news.map((item) => (
+            <IonItem key={item.id}>
+              <IonLabel>
+                <h2>{item.title}</h2>
+                <p>{item.content}</p>
+                <IonChip color="primary">
+                  <IonAvatar>
+                    <img src={item.authorPhotoURL || 'default-avatar.png'} alt="author" />
+                  </IonAvatar>
+                  <IonLabel>{item.authorName}</IonLabel>
+                </IonChip>
+                <IonText color="medium">
+                  <p>{new Date(item.timestamp).toLocaleDateString()}</p>
+                </IonText>
+              </IonLabel>
+            </IonItem>
+          ))}
         </IonList>
+
+        {/* Add News FAB */}
+        <IonFab vertical="bottom" horizontal="end" slot="fixed">
+          <IonFabButton onClick={() => history.push('/add-news')}>
+            <IonIcon icon={add} />
+          </IonFabButton>
+        </IonFab>
       </IonContent>
     </IonPage>
   );

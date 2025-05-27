@@ -8,7 +8,8 @@ import {
   updateDoc,
   doc,
   Timestamp,
-  DocumentData
+  DocumentData,
+  serverTimestamp
 } from 'firebase/firestore';
 import { db } from './firebaseConfig';
 
@@ -47,9 +48,19 @@ export const subscribeToMatches = (
 };
 
 export const addMatch = async (match: Omit<Match, 'id'>): Promise<string> => {
-  const matchesRef = collection(db, 'matches');
-  const docRef = await addDoc(matchesRef, match);
-  return docRef.id;
+  try {
+    const matchData = {
+      ...match,
+      date: match.date instanceof Timestamp ? match.date : Timestamp.fromDate(new Date(match.date)),
+      createdAt: serverTimestamp()
+    };
+
+    const docRef = await addDoc(collection(db, 'matches'), matchData);
+    return docRef.id;
+  } catch (error) {
+    console.error('Error adding match:', error);
+    throw error;
+  }
 };
 
 export const updateMatch = async (matchId: string, updates: Partial<Match>): Promise<void> => {

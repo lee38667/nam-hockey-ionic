@@ -1,54 +1,63 @@
+import React from 'react';
 import {
   IonContent,
   IonHeader,
   IonPage,
   IonTitle,
   IonToolbar,
-  IonCard,
-  IonCardContent,
+  IonInput,
+  IonTextarea,
+  IonButton,
   IonItem,
   IonLabel,
-  IonInput,
-  IonButton,
-  IonTextarea,
-  IonSelect,
-  IonSelectOption,
-  useIonToast
+  IonToast,
+  IonBackButton,
+  IonButtons
 } from '@ionic/react';
 import { useState } from 'react';
-import { collection, addDoc } from 'firebase/firestore';
-import { db } from '../firebase/firebaseConfig';
+import { useHistory } from 'react-router-dom';
+import { addNews } from '../firebase/newsService';
 // import './AddNews.css';
 
 const AddNews: React.FC = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [type, setType] = useState('');
-  const [present] = useIonToast();
+  const [imageUrl, setImageUrl] = useState('');
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const history = useHistory();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     try {
-      await addDoc(collection(db, 'news'), {
+      if (!title || !content) {
+        setToastMessage('Please fill in all required fields');
+        setShowToast(true);
+        return;
+      }
+
+      await addNews({
         title,
         content,
-        type,
-        createdAt: new Date()
+        imageUrl: imageUrl || undefined,
+        author: 'Admin'
       });
-      present({
-        message: 'News/Event added successfully!',
-        duration: 2000,
-        color: 'success'
-      });
+
+      setToastMessage('News added successfully!');
+      setShowToast(true);
+      
+      // Reset form
       setTitle('');
       setContent('');
-      setType('');
+      setImageUrl('');
+      
+      // Navigate back after a short delay
+      setTimeout(() => {
+        history.push('/news');
+      }, 1500);
     } catch (error) {
-      present({
-        message: 'Error adding news/event',
-        duration: 2000,
-        color: 'danger'
-      });
+      console.error('Error adding news:', error);
+      setToastMessage('Error adding news. Please try again.');
+      setShowToast(true);
     }
   };
 
@@ -56,39 +65,55 @@ const AddNews: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Add News/Event</IonTitle>
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="/news" />
+          </IonButtons>
+          <IonTitle>Add News</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
-        <IonCard>
-          <IonCardContent>
-            <form onSubmit={handleSubmit}>
-              <IonItem>
-                <IonLabel position="stacked">Title</IonLabel>
-                <IonInput value={title} onIonChange={e => setTitle(e.detail.value!)} required />
-              </IonItem>
-              <IonItem>
-                <IonLabel position="stacked">Type</IonLabel>
-                <IonSelect value={type} onIonChange={e => setType(e.detail.value)} required>
-                  <IonSelectOption value="news">News</IonSelectOption>
-                  <IonSelectOption value="event">Event</IonSelectOption>
-                </IonSelect>
-              </IonItem>
-              <IonItem>
-                <IonLabel position="stacked">Content</IonLabel>
-                <IonTextarea
-                  value={content}
-                  onIonChange={e => setContent(e.detail.value!)}
-                  rows={6}
-                  required
-                />
-              </IonItem>
-              <IonButton expand="block" type="submit" className="ion-margin-top">
-                Add News/Event
-              </IonButton>
-            </form>
-          </IonCardContent>
-        </IonCard>
+
+      <IonContent className="ion-padding">
+        <IonItem>
+          <IonLabel position="stacked">Title *</IonLabel>
+          <IonInput
+            value={title}
+            onIonChange={e => setTitle(e.detail.value!)}
+            placeholder="Enter news title"
+            required
+          />
+        </IonItem>
+
+        <IonItem>
+          <IonLabel position="stacked">Content *</IonLabel>
+          <IonTextarea
+            value={content}
+            onIonChange={e => setContent(e.detail.value!)}
+            placeholder="Enter news content"
+            rows={6}
+            required
+          />
+        </IonItem>
+
+        <IonItem>
+          <IonLabel position="stacked">Image URL</IonLabel>
+          <IonInput
+            value={imageUrl}
+            onIonChange={e => setImageUrl(e.detail.value!)}
+            placeholder="Enter image URL (optional)"
+          />
+        </IonItem>
+
+        <IonButton expand="block" onClick={handleSubmit} className="ion-margin-top">
+          Add News
+        </IonButton>
+
+        <IonToast
+          isOpen={showToast}
+          onDidDismiss={() => setShowToast(false)}
+          message={toastMessage}
+          duration={2000}
+          position="bottom"
+        />
       </IonContent>
     </IonPage>
   );

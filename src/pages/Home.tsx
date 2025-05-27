@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   IonPage,
   IonHeader,
@@ -24,9 +24,44 @@ import {
 } from '@ionic/react';
 import { personCircleOutline, peopleOutline, calendarOutline, radio } from 'ionicons/icons';
 import { RefresherCustomEvent } from '@ionic/react';
+import { subscribeToMatches } from '../firebase/matchService';
+import { subscribeToNews } from '../firebase/newsService';
+import { subscribeToTeams } from '../firebase/teamService';
+import { Match } from '../firebase/matchService';
+import { NewsItem } from '../firebase/newsService';
+import { Team } from '../firebase/teamService';
 import './Home.css';
 
 const Home: React.FC = () => {
+  const [liveMatches, setLiveMatches] = useState<Match[]>([]);
+  const [latestNews, setLatestNews] = useState<NewsItem[]>([]);
+  const [teams, setTeams] = useState<Team[]>([]);
+
+  useEffect(() => {
+    // Subscribe to live matches
+    const unsubscribeMatches = subscribeToMatches('live', (matches) => {
+      setLiveMatches(matches);
+    });
+
+    // Subscribe to latest news
+    const unsubscribeNews = subscribeToNews((news) => {
+      setLatestNews(news.slice(0, 1)); // Get only the latest news item
+    });
+
+    // Subscribe to teams for standings
+    const unsubscribeTeams = subscribeToTeams((teamsData) => {
+      // Sort teams by points (you might need to add points to your team model)
+      const sortedTeams = teamsData.sort((a, b) => (b.points || 0) - (a.points || 0));
+      setTeams(sortedTeams.slice(0, 5)); // Get top 5 teams
+    });
+
+    return () => {
+      unsubscribeMatches();
+      unsubscribeNews();
+      unsubscribeTeams();
+    };
+  }, []);
+
   const handleRefresh = (event: RefresherCustomEvent) => {
     setTimeout(() => {
       event.detail.complete();
@@ -35,8 +70,6 @@ const Home: React.FC = () => {
 
   return (
     <IonPage>
-    
-
       <IonContent fullscreen>
         <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
           <IonRefresherContent></IonRefresherContent>
@@ -60,11 +93,21 @@ const Home: React.FC = () => {
                   <IonCardTitle className="colorWhite">Today's Matches</IonCardTitle>
                 </IonCardHeader>
                 <IonCardContent>
-                  <div className="match-preview" style={{ color: 'white' }}>
-                    <div className="team" style={{ color: 'white' }}>Team A</div>
-                    <div className="score" style={{ color: 'white' }}>2 - 1</div>
-                    <div className="team" style={{ color: 'white' }}>Team B</div>
-                  </div>
+                  {liveMatches.length > 0 ? (
+                    liveMatches.map(match => (
+                      <div key={match.id} className="match-preview" style={{ color: 'white' }}>
+                        <div className="team" style={{ color: 'white' }}>{match.homeTeam}</div>
+                        <div className="score" style={{ color: 'white' }}>
+                          {match.homeScore || 0} - {match.awayScore || 0}
+                        </div>
+                        <div className="team" style={{ color: 'white' }}>{match.awayTeam}</div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="no-matches" style={{ color: 'white' }}>
+                      No live matches at the moment
+                    </div>
+                  )}
                 </IonCardContent>
               </IonCard>
             </IonCol>
@@ -75,10 +118,16 @@ const Home: React.FC = () => {
                   <IonCardTitle className="colorWhite">Latest News</IonCardTitle>
                 </IonCardHeader>
                 <IonCardContent>
-                  <div className="news-preview" style={{ color: 'white' }}>
-                    <h3>National Team Qualifies for Championship</h3>
-                    <p>Read more about this exciting achievement...</p>
-                  </div>
+                  {latestNews.length > 0 ? (
+                    <div className="news-preview" style={{ color: 'white' }}>
+                      <h3>{latestNews[0].title}</h3>
+                      <p>{latestNews[0].content.substring(0, 100)}...</p>
+                    </div>
+                  ) : (
+                    <div className="no-news" style={{ color: 'white' }}>
+                      No news available
+                    </div>
+                  )}
                 </IonCardContent>
               </IonCard>
             </IonCol>
@@ -98,16 +147,13 @@ const Home: React.FC = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Team A</td>
-                        <td>15</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>Team B</td>
-                        <td>12</td>
-                      </tr>
+                      {teams.map((team, index) => (
+                        <tr key={team.id}>
+                          <td>{index + 1}</td>
+                          <td>{team.name}</td>
+                          <td>{team.points || 0}</td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </IonCardContent>

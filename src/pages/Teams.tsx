@@ -20,17 +20,48 @@ import {
   IonChip,
   IonAvatar,
   IonIcon,
-  RefresherCustomEvent
+  RefresherCustomEvent,
+  IonSpinner,
+  IonFab,
+  IonFabButton
 } from '@ionic/react';
-import { trophyOutline, peopleOutline, statsChartOutline } from 'ionicons/icons';
+import { trophyOutline, peopleOutline, statsChartOutline, add } from 'ionicons/icons';
+import { useEffect, useState } from 'react';
+import { Team, subscribeToTeams } from '../firebase/teamService';
 import './Teams.css';
+import { useHistory } from 'react-router-dom';
+import AddTeamModal from '../components/AddTeamModal';
 
 const Teams: React.FC = () => {
+  const [teams, setTeams] = useState<Team[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchText, setSearchText] = useState('');
+  const history = useHistory();
+  const [showAddTeam, setShowAddTeam] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = subscribeToTeams((teamsData) => {
+      setTeams(teamsData);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   const handleRefresh = (event: RefresherCustomEvent) => {
-    setTimeout(() => {
-      event.detail.complete();
-    }, 2000);
+    event.detail.complete();
   };
+
+  const handleTeamClick = (teamId: string) => {
+    history.push(`/team/${teamId}`);
+  };
+
+  const filteredTeams = teams.filter(team => 
+    team.name.toLowerCase().includes(searchText.toLowerCase()) ||
+    team.division.toLowerCase().includes(searchText.toLowerCase())
+  );
+
+  const featuredTeam = teams.find(team => team.status === 'champion');
 
   return (
     <IonPage>
@@ -44,73 +75,104 @@ const Teams: React.FC = () => {
         <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
           <IonRefresherContent></IonRefresherContent>
         </IonRefresher>
-        {/* Featured Team */}
-        <IonCard className="featured-team">
-          <div className="team-banner">
-            <img src="/src/pages/images/CloseUpHockey.jpg" alt="Team Banner" />
-            <div className="team-overlay">
-              <h2>National Team</h2>
-              <p>Premier League Champions</p>
-            </div>
+
+        <IonSearchbar
+          value={searchText}
+          onIonChange={e => setSearchText(e.detail.value!)}
+          placeholder="Search teams"
+          className="team-search"
+        />
+
+        {loading ? (
+          <div className="loading-container">
+            <IonSpinner name="crescent" />
           </div>
-          <IonCardContent>
-            <IonGrid>
-              <IonRow>
-                <IonCol size="5">
-                  <div className="stat-item">
-                    <IonIcon icon={trophyOutline} />
-                    <span>3</span>
-                    <small>Titles</small>
+        ) : (
+          <>
+            {/* Featured Team */}
+            {featuredTeam && (
+              <IonCard className="featured-team">
+                <div className="team-banner">
+                  <img 
+                    src={featuredTeam.bannerUrl || "/src/pages/images/CloseUpHockey.jpg"} 
+                    alt={`${featuredTeam.name} Banner`} 
+                  />
+                  <div className="team-overlay">
+                    <h2>{featuredTeam.name}</h2>
+                    <p>{featuredTeam.description || `${featuredTeam.division} Champions`}</p>
                   </div>
-                </IonCol>
-                <IonCol size="7">
-                  <div className="stat-item">
-                    <IonIcon icon={peopleOutline} />
-                    <span>25</span>
-                    <small>Players</small>
-                  </div>
-                </IonCol>
-              
-              </IonRow>
-            </IonGrid>
-          </IonCardContent>
-        </IonCard>
+                </div>
+                <IonCardContent>
+                  <IonGrid>
+                    <IonRow>
+                      <IonCol size="5">
+                        <div className="stat-item">
+                          <IonIcon icon={trophyOutline} />
+                          <span>{featuredTeam.titles || 0}</span>
+                          <small>Titles</small>
+                        </div>
+                      </IonCol>
+                      <IonCol size="7">
+                        <div className="stat-item">
+                          <IonIcon icon={peopleOutline} />
+                          <span>{featuredTeam.playerCount}</span>
+                          <small>Players</small>
+                        </div>
+                      </IonCol>
+                    </IonRow>
+                  </IonGrid>
+                </IonCardContent>
+              </IonCard>
+            )}
 
-        {/* Teams List */}
-        <IonList>
-          <IonItem className="team-item">
-            <IonAvatar slot="start">
-              <img src="/src/pages/images/CloseUpHockey.jpg" alt="Team A" />
-            </IonAvatar>
-            <IonLabel>
-              <h2>Team A</h2>
-              <p>Division 1 • 15 Players</p>
-            </IonLabel>
-            <IonChip className='colorWhite' slot="end">Active</IonChip>
-          </IonItem>
+            {/* Teams List */}
+            <IonList>
+              {filteredTeams.map(team => (
+                <IonItem 
+                  key={team.id} 
+                  className="team-item"
+                  onClick={() => team.id && handleTeamClick(team.id)}
+                  button
+                >
+                  <IonAvatar slot="start">
+                    <img 
+                      src={team.imageUrl || "/src/pages/images/CloseUpHockey.jpg"} 
+                      alt={team.name} 
+                    />
+                  </IonAvatar>
+                  <IonLabel>
+                    <h2>{team.name}</h2>
+                    <p>{team.division} • {team.playerCount} Players</p>
+                  </IonLabel>
+                  <IonChip 
+                    color={
+                      team.status === 'champion' ? 'success' : 
+                      team.status === 'promoted' ? 'warning' : 
+                      'primary'
+                    } 
+                    className='colorWhite' 
+                    slot="end"
+                  >
+                    {(team.status || 'active').charAt(0).toUpperCase() + (team.status || 'active').slice(1)}
+                  </IonChip>
+                </IonItem>
+              ))}
+            </IonList>
+          </>
+        )}
 
-          <IonItem className="team-item">
-            <IonAvatar slot="start">
-              <img src="/src/pages/images/CloseUpHockey.jpg" alt="Team B" />
-            </IonAvatar>
-            <IonLabel>
-              <h2>Team B</h2>
-              <p>Premier League • 20 Players</p>
-            </IonLabel>
-            <IonChip color="success" className='colorWhite' slot="end">Champion</IonChip>
-          </IonItem>
+        {/* Add Team FAB */}
+        <IonFab vertical="bottom" horizontal="end" slot="fixed">
+          <IonFabButton onClick={() => setShowAddTeam(true)}>
+            <IonIcon icon={add} />
+          </IonFabButton>
+        </IonFab>
 
-          <IonItem className="team-item">
-            <IonAvatar slot="start">
-              <img src="/src/pages/images/CloseUpHockey.jpg" alt="Team C" />
-            </IonAvatar>
-            <IonLabel>
-              <h2>Team C</h2>
-              <p>Division 2 • 18 Players</p>
-            </IonLabel>
-            <IonChip color="warning" slot="end">Promoted</IonChip>
-          </IonItem>
-        </IonList>
+        {/* Add Team Modal */}
+        <AddTeamModal 
+          isOpen={showAddTeam} 
+          onClose={() => setShowAddTeam(false)} 
+        />
       </IonContent>
     </IonPage>
   );

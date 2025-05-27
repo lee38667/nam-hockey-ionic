@@ -17,13 +17,9 @@ import {
 } from '@ionic/react';
 import {
   personCircleOutline,
-  notificationsOutline,
-  settingsOutline,
-  helpCircleOutline,
   informationCircleOutline,
   logOutOutline,
   moonOutline,
-  languageOutline,
   peopleOutline,
   personAddOutline,
   newspaperOutline
@@ -32,7 +28,6 @@ import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { getAuth, signOut } from 'firebase/auth';
 import './More.css';
-
 
 const More: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -98,12 +93,6 @@ const More: React.FC = () => {
             <IonLabel>My Profile</IonLabel>
           </IonItem>
 
-          <IonItem>
-            <IonIcon icon={notificationsOutline} slot="start" />
-            <IonLabel>Notifications</IonLabel>
-            <IonToggle slot="end" />
-          </IonItem>
-
           <IonItemDivider>Preferences</IonItemDivider>
 
           <IonItem>
@@ -117,29 +106,11 @@ const More: React.FC = () => {
           </IonItem>
 
           <IonItem>
-            <IonIcon icon={languageOutline} slot="start" />
-            <IonLabel>Language</IonLabel>
-            <IonLabel slot="end" color="medium">English</IonLabel>
-          </IonItem>
-
-          <IonItemDivider>Support</IonItemDivider>
-
-          <IonItem>
-            <IonIcon icon={helpCircleOutline} slot="start" />
-            <IonLabel>Help & Support</IonLabel>
-          </IonItem>
-
-          <IonItem>
             <IonIcon icon={informationCircleOutline} slot="start" />
             <IonLabel>About</IonLabel>
           </IonItem>
 
           <IonItemDivider>Account Actions</IonItemDivider>
-
-          <IonItem>
-            <IonIcon icon={settingsOutline} slot="start" />
-            <IonLabel>Settings</IonLabel>
-          </IonItem>
 
           <IonItem button onClick={() => history.push('/register-team')}>
             <IonIcon icon={peopleOutline} slot="start" />
@@ -164,7 +135,7 @@ const More: React.FC = () => {
 
         {/* App Version */}
         <div className="app-version">
-          <p>Version 1.0.0</p>
+          <p>Version 1.0.5</p>
         </div>
       </IonContent>
     </IonPage>
