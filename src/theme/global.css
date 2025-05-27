@@ -41,6 +41,7 @@ ion-content {
 }
 
 ion-card {
+  
   margin: var(--spacing-md);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-md);
@@ -114,7 +115,8 @@ ion-button {
   :root {
     --light-color: #1e1e1e;
     --dark-color: #ffffff;
-    --medium-color: #a0a0a0;
+    --medium-color: #ffffff;
+    --purple-color:#133065;
   }
 
   ion-content {
@@ -150,7 +152,7 @@ ion-button {
 :root {
   --ion-background-color: #f4f5f8;
   --ion-background-color-rgb: 244, 245, 248;
-  --ion-card-background: #ffffff;
+  --ion-card-background: #133065;
   --ion-toolbar-background: #ffffff;
   --ion-tab-bar-background: #ffffff;
   --ion-item-background: #ffffff;

@@ -18,7 +18,7 @@ import {
 import { useState } from 'react';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebaseConfig';
-// import './RegisterTeam.css';
+import './RegisterTeam.css';
 
 const RegisterTeam: React.FC = () => {
   const [teamName, setTeamName] = useState('');
@@ -61,7 +61,7 @@ const RegisterTeam: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonCard>
+        <IonCard className="register-team-card">
           <IonCardContent>
             <form onSubmit={handleSubmit}>
               <IonItem>

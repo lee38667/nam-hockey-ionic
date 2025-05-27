@@ -115,7 +115,7 @@ const Teams: React.FC = () => {
         ) : (
           <>
             {/* Team Status Stats */}
-            <IonCard className="status-stats-card">
+            <IonCard className="status-stats-card darkText">
               <IonCardContent>
                 <IonGrid>
                   <IonRow>
@@ -161,19 +161,7 @@ const Teams: React.FC = () => {
                     <p>{featuredTeam.description || `${featuredTeam.division} Champions`}</p>
                   </div>
                 </div>
-                <IonCardContent>
-                  <IonGrid>
-                    <IonRow>
-                      <IonCol size="12">
-                        <div className="stat-item">
-                          <IonIcon icon={peopleOutline} />
-                          <span>{teamStats[featuredTeam.id!]?.totalPlayers || 0}</span>
-                          <small>Players</small>
-                        </div>
-                      </IonCol>
-                    </IonRow>
-                  </IonGrid>
-                </IonCardContent>
+               
               </IonCard>
             )}
 
