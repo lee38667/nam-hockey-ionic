@@ -15,7 +15,7 @@ import { arrowBackOutline } from 'ionicons/icons';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { getAuth, updateEmail, updatePassword } from 'firebase/auth';
-// import './Profile.css';
+import './Profile.css';
 
 const Profile: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -80,36 +80,39 @@ const Profile: React.FC = () => {
       </IonHeader>
 
       <IonContent className="ion-padding">
-        <IonItem>
+        <IonItem className="custom-input">
           <IonLabel position="stacked">Email</IonLabel>
           <IonInput
             type="email"
             value={email}
             onIonChange={e => setEmail(e.detail.value!)}
+            className="custom-input-field"
           />
         </IonItem>
 
-        <IonItem>
+        <IonItem className="custom-input">
           <IonLabel position="stacked">New Password</IonLabel>
           <IonInput
             type="password"
             value={newPassword}
             onIonChange={e => setNewPassword(e.detail.value!)}
             placeholder="Leave blank to keep current password"
+            className="custom-input-field"
           />
         </IonItem>
 
-        <IonItem>
+        <IonItem className="custom-input">
           <IonLabel position="stacked">Confirm New Password</IonLabel>
           <IonInput
             type="password"
             value={confirmPassword}
             onIonChange={e => setConfirmPassword(e.detail.value!)}
             placeholder="Confirm new password"
+            className="custom-input-field"
           />
         </IonItem>
 
-        <IonButton expand="block" onClick={handleUpdateProfile} className="ion-margin-top">
+        <IonButton expand="block" onClick={handleUpdateProfile} className="ion-margin-top update-button">
           Update Profile
         </IonButton>
       </IonContent>

@@ -1,3 +1,149 @@
+/* Global Variables */
+:root {
+  /* Colors */
+  --primary-color: #3880ff;
+  --primary-hover: #3171e0;
+  --success-color: #2dd36f;
+  --warning-color: #ffc409;
+  --danger-color: #eb445a;
+  --dark-color: #222428;
+  --medium-color: #92949c;
+  --light-color: #f4f5f8;
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* Border Radius */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 6px 16px rgba(0, 0, 0, 0.15);
+
+  /* Typography */
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 20px;
+  --font-size-xl: 24px;
+}
+
+/* Base Styles */
+ion-content {
+  --background: var(--light-color);
+}
+
+ion-card {
+  margin: var(--spacing-md);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+ion-item {
+  --background: #ffffff;
+  --border-radius: var(--border-radius-md);
+  margin-bottom: var(--spacing-sm);
+  --padding-start: var(--spacing-md);
+  --padding-end: var(--spacing-md);
+  --padding-top: var(--spacing-sm);
+  --padding-bottom: var(--spacing-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+ion-button {
+  --border-radius: var(--border-radius-md);
+  --box-shadow: var(--shadow-md);
+  font-weight: 600;
+  height: 48px;
+}
+
+/* Common Components */
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--spacing-md) 0;
+}
+
+.stat-item ion-icon {
+  font-size: var(--font-size-xl);
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-sm);
+}
+
+.stat-item span {
+  font-size: var(--font-size-lg);
+  font-weight: bold;
+  color: var(--dark-color);
+}
+
+.stat-item small {
+  font-size: var(--font-size-xs);
+  color: var(--medium-color);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: var(--spacing-xs);
+}
+
+/* Status Chips */
+.status-chip {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--spacing-sm);
+}
+
+.status-chip span {
+  font-size: var(--font-size-lg);
+  font-weight: bold;
+  color: white;
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --light-color: #1e1e1e;
+    --dark-color: #ffffff;
+    --medium-color: #a0a0a0;
+  }
+
+  ion-content {
+    --background: var(--light-color);
+  }
+
+  ion-item {
+    --background: #2a2a2a;
+  }
+
+  .stat-item span {
+    color: var(--dark-color);
+  }
+
+  .stat-item small {
+    color: var(--medium-color);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  :root {
+    --spacing-md: 12px;
+    --spacing-lg: 20px;
+    --font-size-lg: 18px;
+    --font-size-xl: 20px;
+  }
+}
+
 /* Global styles for the app */
 
 /* Light mode colors */

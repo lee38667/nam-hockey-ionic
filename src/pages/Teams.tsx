@@ -38,6 +38,11 @@ const Teams: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
   const [teamStats, setTeamStats] = useState<{[key: string]: any}>({});
+  const [statusCounts, setStatusCounts] = useState({
+    champion: 0,
+    promoted: 0,
+    active: 0
+  });
   const history = useHistory();
   const [showAddTeam, setShowAddTeam] = useState(false);
 
@@ -46,12 +51,22 @@ const Teams: React.FC = () => {
       setTeams(teamsData);
       // Get stats for each team
       const stats: {[key: string]: any} = {};
+      const counts = {
+        champion: 0,
+        promoted: 0,
+        active: 0
+      };
+
       for (const team of teamsData) {
         if (team.id) {
           stats[team.id] = await getPlayerStats(team.id);
+          // Count teams by status
+          const status = team.status || 'active';
+          counts[status as keyof typeof counts]++;
         }
       }
       setTeamStats(stats);
+      setStatusCounts(counts);
       setLoading(false);
     });
 
@@ -99,6 +114,40 @@ const Teams: React.FC = () => {
           </div>
         ) : (
           <>
+            {/* Team Status Stats */}
+            <IonCard className="status-stats-card">
+              <IonCardContent>
+                <IonGrid>
+                  <IonRow>
+                    <IonCol size="4">
+                      <div className="stat-item">
+                        <IonChip color="success" className="status-chip">
+                          <span>{statusCounts.champion}</span>
+                        </IonChip>
+                        <small>Champions</small>
+                      </div>
+                    </IonCol>
+                    <IonCol size="4">
+                      <div className="stat-item">
+                        <IonChip color="warning" className="status-chip">
+                          <span>{statusCounts.promoted}</span>
+                        </IonChip>
+                        <small>Promoted</small>
+                      </div>
+                    </IonCol>
+                    <IonCol size="4">
+                      <div className="stat-item">
+                        <IonChip color="primary" className="status-chip">
+                          <span>{statusCounts.active}</span>
+                        </IonChip>
+                        <small>Active</small>
+                      </div>
+                    </IonCol>
+                  </IonRow>
+                </IonGrid>
+              </IonCardContent>
+            </IonCard>
+
             {/* Featured Team */}
             {featuredTeam && (
               <IonCard className="featured-team">
@@ -115,14 +164,7 @@ const Teams: React.FC = () => {
                 <IonCardContent>
                   <IonGrid>
                     <IonRow>
-                      <IonCol size="5">
-                        <div className="stat-item">
-                          <IonIcon icon={trophyOutline} />
-                          <span>{featuredTeam.titles || 0}</span>
-                          <small>Titles</small>
-                        </div>
-                      </IonCol>
-                      <IonCol size="7">
+                      <IonCol size="12">
                         <div className="stat-item">
                           <IonIcon icon={peopleOutline} />
                           <span>{teamStats[featuredTeam.id!]?.totalPlayers || 0}</span>

@@ -1,6 +1,6 @@
 .teams-header {
-  padding: 16px;
-  background: var(--ion-color-light);
+  padding: var(--spacing-md);
+  background: var(--light-color);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -8,9 +8,10 @@
 
 .teams-search {
   --background: white;
-  --border-radius: 8px;
-  --box-shadow: var(--ion-box-shadow);
+  --border-radius: var(--border-radius-md);
+  --box-shadow: var(--shadow-md);
 }
+
 .purpleNavBar{
   color: blue;
 }
@@ -21,10 +22,10 @@
   color: white;
 }
 .featured-team {
-  margin: 16px;
-  border-radius: 12px;
+  margin: var(--spacing-md);
+  border-radius: var(--border-radius-lg);
   overflow: hidden;
-  box-shadow: var(--ion-box-shadow);
+  box-shadow: var(--shadow-md);
 }
 
 .team-banner {
@@ -44,20 +45,20 @@
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 20px;
+  padding: var(--spacing-lg);
   background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
   color: white;
 }
 
 .team-overlay h2 {
   margin: 0;
-  font-size: 24px;
+  font-size: var(--font-size-xl);
   font-weight: bold;
 }
 
 .team-overlay p {
-  margin: 8px 0 0;
-  font-size: 16px;
+  margin: var(--spacing-sm) 0 0;
+  font-size: var(--font-size-md);
   opacity: 0.9;
 }
 .colorWhite{
@@ -90,28 +91,28 @@
 }
 
 .team-item {
-  --padding-start: 16px;
-  --padding-end: 16px;
-  --padding-top: 12px;
-  --padding-bottom: 12px;
+  --padding-start: var(--spacing-md);
+  --padding-end: var(--spacing-md);
+  --padding-top: var(--spacing-sm);
+  --padding-bottom: var(--spacing-sm);
 }
 
 .team-item ion-avatar {
   width: 50px;
   height: 50px;
-  margin-right: 16px;
+  margin-right: var(--spacing-md);
 }
 
 .team-item h2 {
-  font-size: 16px;
+  font-size: var(--font-size-md);
   font-weight: 600;
   margin: 0;
 }
 
 .team-item p {
-  font-size: 14px;
-  color: var(--ion-color-medium);
-  margin: 4px 0 0;
+  font-size: var(--font-size-sm);
+  color: var(--medium-color);
+  margin: var(--spacing-xs) 0 0;
 }
 
 /* Responsive Design */
@@ -121,11 +122,11 @@
   }
 
   .team-overlay h2 {
-    font-size: 20px;
+    font-size: var(--font-size-lg);
   }
 
   .team-overlay p {
-    font-size: 14px;
+    font-size: var(--font-size-sm);
   }
 
   .stat-item ion-icon {
@@ -150,4 +151,75 @@
   .team-item {
     --background: #2a2a2a;
   }
+
+  .status-stats-card .stat-item small {
+    color: var(--ion-color-light);
+  }
+}
+
+.total-stats-card {
+  margin: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px #0000001a;
+}
+
+.total-stats-card .stat-item {
+  text-align: center;
+  padding: 16px;
+}
+
+.total-stats-card .stat-item ion-icon {
+  font-size: 32px;
+  color: var(--ion-color-primary);
+  margin-bottom: 8px;
+}
+
+.total-stats-card .stat-item span {
+  display: block;
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--ion-color-dark);
+  margin: 8px 0;
+}
+
+.total-stats-card .stat-item small {
+  color: var(--ion-color-medium);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.status-stats-card {
+  margin: var(--spacing-md);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.status-stats-card .stat-item {
+  text-align: center;
+  padding: var(--spacing-sm);
+}
+
+.status-stats-card .status-chip {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 8px;
+}
+
+.status-stats-card .status-chip span {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+}
+
+.status-stats-card .stat-item small {
+  color: var(--ion-color-dark);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: block;
+  margin-top: 4px;
 } 

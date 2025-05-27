@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonLabel, IonText, IonGrid, IonRow, IonCol, IonAvatar, IonChip, IonIcon, IonSpinner, IonFab, IonFabButton, IonFabList, IonModal, IonButton, IonInput, IonSelect, IonSelectOption, IonTextarea, IonRefresher, IonRefresherContent, RefresherCustomEvent } from '@ionic/react';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonLabel, IonText, IonGrid, IonRow, IonCol, IonAvatar, IonChip, IonIcon, IonSpinner, IonFab, IonFabButton, IonFabList, IonModal, IonButton, IonInput, IonSelect, IonSelectOption, IonTextarea } from '@ionic/react';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebaseConfig';
 import { Team } from '../firebase/teamService';
@@ -118,20 +118,6 @@ const TeamDetails: React.FC = () => {
     }
   };
 
-  const handleRefresh = (event: RefresherCustomEvent) => {
-    // Re-fetch team data
-    const unsubscribe = subscribeToTeamPlayers(id, (updatedPlayers) => {
-      setPlayers(updatedPlayers);
-      // Update team stats
-      getPlayerStats(id).then(updatedStats => {
-        setTeamStats(updatedStats);
-        event.detail.complete();
-      });
-    });
-
-    return () => unsubscribe();
-  };
-
   if (loading) {
     return (
       <IonPage>
@@ -185,9 +171,6 @@ const TeamDetails: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>
-          <IonRefresherContent></IonRefresherContent>
-        </IonRefresher>
         <div className="ion-padding">
           {/* Team Roster Section */}
           <IonCard>
