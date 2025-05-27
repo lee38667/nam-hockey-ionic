@@ -13,7 +13,10 @@ import {
   IonSelect,
   IonSelectOption,
   IonTextarea,
-  IonList
+  IonList,
+  IonGrid,
+  IonRow,
+  IonCol
 } from '@ionic/react';
 import { useState } from 'react';
 import { addMatch } from '../firebase/matchService';
@@ -33,6 +36,8 @@ const AddMatchModal: React.FC<AddMatchModalProps> = ({ isOpen, onClose }) => {
   const [status, setStatus] = useState<'upcoming' | 'live' | 'past'>('upcoming');
   const [homeTeamImage, setHomeTeamImage] = useState('');
   const [awayTeamImage, setAwayTeamImage] = useState('');
+  const [homeScore, setHomeScore] = useState<number>(0);
+  const [awayScore, setAwayScore] = useState<number>(0);
 
   const handleSubmit = async () => {
     try {
@@ -48,7 +53,8 @@ const AddMatchModal: React.FC<AddMatchModalProps> = ({ isOpen, onClose }) => {
         location,
         status,
         ...(homeTeamImage && { homeTeamImage }),
-        ...(awayTeamImage && { awayTeamImage })
+        ...(awayTeamImage && { awayTeamImage }),
+        ...(status === 'live' && { homeScore, awayScore })
       };
 
       await addMatch(matchData);
@@ -62,6 +68,8 @@ const AddMatchModal: React.FC<AddMatchModalProps> = ({ isOpen, onClose }) => {
       setStatus('upcoming');
       setHomeTeamImage('');
       setAwayTeamImage('');
+      setHomeScore(0);
+      setAwayScore(0);
     } catch (error) {
       console.error('Error adding match:', error);
     }
@@ -126,7 +134,7 @@ const AddMatchModal: React.FC<AddMatchModalProps> = ({ isOpen, onClose }) => {
           </IonItem>
 
           <IonItem>
-            <IonLabel position="stacked" >Status</IonLabel>
+            <IonLabel position="stacked">Status</IonLabel>
             <IonSelect
               value={status}
               onIonChange={e => setStatus(e.detail.value)}
@@ -136,6 +144,35 @@ const AddMatchModal: React.FC<AddMatchModalProps> = ({ isOpen, onClose }) => {
               <IonSelectOption value="past">Past</IonSelectOption>
             </IonSelect>
           </IonItem>
+
+          {status === 'live' && (
+            <IonGrid>
+              <IonRow>
+                <IonCol>
+                  <IonItem>
+                    <IonLabel position="stacked">Home Score</IonLabel>
+                    <IonInput
+                      type="number"
+                      value={homeScore}
+                      onIonChange={e => setHomeScore(parseInt(e.detail.value!) || 0)}
+                      min={0}
+                    />
+                  </IonItem>
+                </IonCol>
+                <IonCol>
+                  <IonItem>
+                    <IonLabel position="stacked">Away Score</IonLabel>
+                    <IonInput
+                      type="number"
+                      value={awayScore}
+                      onIonChange={e => setAwayScore(parseInt(e.detail.value!) || 0)}
+                      min={0}
+                    />
+                  </IonItem>
+                </IonCol>
+              </IonRow>
+            </IonGrid>
+          )}
 
           <IonItem>
             <IonLabel position="stacked">Home Team Image URL</IonLabel>
