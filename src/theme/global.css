@@ -115,15 +115,34 @@ ion-button {
   :root {
     --light-color: #1e1e1e;
     --dark-color: #ffffff;
-    --medium-color: #ffffff;
-    --purple-color:#133065;
+    --medium-color: #a0a0a0;
   }
 
   ion-content {
-    --background: var(--light-color);
+    --background: #1e1e1e;
   }
 
   ion-item {
+    --background: #2a2a2a;
+  }
+
+  ion-card {
+    --background: #2a2a2a;
+  }
+
+  ion-toolbar {
+    --background: #2a2a2a;
+  }
+
+  ion-header {
+    --background: #2a2a2a;
+  }
+
+  ion-list {
+    background: transparent;
+  }
+
+  ion-searchbar {
     --background: #2a2a2a;
   }
 
@@ -133,6 +152,23 @@ ion-button {
 
   .stat-item small {
     color: var(--medium-color);
+  }
+
+  /* Ensure all text is visible in dark mode */
+  h1, h2, h3, h4, h5, h6, p, ion-label, ion-text {
+    color: var(--dark-color);
+  }
+
+  /* Ensure inputs and form elements are visible */
+  ion-input, ion-textarea, ion-select {
+    --background: #2a2a2a;
+    --color: var(--dark-color);
+  }
+
+  /* Ensure buttons are visible */
+  ion-button {
+    --background: #3880ff;
+    --color: white;
   }
 }
 
@@ -151,6 +187,8 @@ ion-button {
 /* Light mode colors */
 :root {
   --ion-background-color: #f4f5f8;
+  --ion-color-dark:#ffffff;
+  --ion-color-light:white;
   --ion-background-color-rgb: 244, 245, 248;
   --ion-card-background: #133065;
   --ion-toolbar-background: #ffffff;

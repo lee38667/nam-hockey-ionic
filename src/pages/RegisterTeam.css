@@ -40,6 +40,11 @@
   --border-radius: 8px;
   height: 48px;
   font-weight: 600;
+  --color: white;
+}
+
+.register-team-card ion-button ion-icon {
+  color: white;
 }
 
 /* Dark Mode Support */

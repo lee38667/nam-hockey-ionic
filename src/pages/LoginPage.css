@@ -1,6 +1,6 @@
 .login-card {
   margin: 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
   border-radius: 16px;
 }
 
@@ -24,16 +24,21 @@
   margin-bottom: 16px;
 }
 
+.custom-input ion-label {
+  color: white !important;
+}
+
 .custom-input-field {
   --padding-start: 0;
   --padding-end: 0;
   --padding-top: 8px;
   --padding-bottom: 8px;
   font-size: 16px;
+  color: white !important;
 }
 
 .signup-button {
-  --color: var(--ion-color-primary);
+  --color: var(--ion-color-dark);
   font-weight: 500;
   margin-top: 8px;
 }
@@ -68,12 +73,12 @@ ion-button {
 }
 
 .login-card ion-label {
-  color: var(--ion-color-medium);
+  color: white !important;
 }
 
 .login-card ion-input {
   --padding-start: 0.5rem;
-  color: var(--ion-color-dark);
+  color: white !important;
 }
 
 .login-card ion-text p {

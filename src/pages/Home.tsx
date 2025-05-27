@@ -78,7 +78,7 @@ const Home: React.FC = () => {
         {/* Hero Section */}
         <div className="hero-section">
           <IonImg src="/src/pages/images/hockey-players.jpg" alt="Hockey Players" />
-          <div className="hero-overlay">
+          <div className="hero-overlay ">
             <h1>Welcome to Namibia Hockey</h1>
             <p>Your source for Namibian hockey news, scores, and updates</p>
           </div>

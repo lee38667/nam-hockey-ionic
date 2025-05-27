@@ -65,7 +65,7 @@ const News: React.FC = () => {
 
         {/* Featured News */}
         {news.length > 0 && (
-          <IonCard className="featured-news" color="primary-tint" >
+          <IonCard className="featured-news " color="primary-tint" >
             <img src={news[0].imageUrl || "/src/pages/images/hockey-players.jpg"} alt="Featured News" />
             <IonCardHeader>
               <IonChip color="primary">Latest</IonChip>
@@ -75,19 +75,7 @@ const News: React.FC = () => {
                 <span>{news[0].createdAt?.toDate().toLocaleDateString()}</span>
               </IonCardSubtitle>
             </IonCardHeader>
-            <IonCardContent>
-              <p>{news[0].content}</p>
-              <div className="news-actions">
-                <IonChip color="medium" outline>
-                  <IonIcon icon={shareOutline} />
-                  <span>Share</span>
-                </IonChip>
-                <IonChip color="medium" outline>
-                  <IonIcon icon={bookmarkOutline} />
-                  <span>Save</span>
-                </IonChip>
-              </div>
-            </IonCardContent>
+          
           </IonCard>
         )}
 
