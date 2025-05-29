@@ -74,8 +74,6 @@ Each file represents a screen in the app (e.g., `Home.tsx`, `Matches.tsx`, `Team
 - `global.css`: Global styles
 - `variables.css`: CSS variables for theming
 
-### cypress/
-End-to-end tests using Cypress.
 
 ---
 
@@ -84,10 +82,6 @@ End-to-end tests using Cypress.
 - Authentication, Firestore, and Storage are used for user data, app data, and media.
 
 ---
-
-## Testing
-- Cypress is used for E2E testing. Test files are in `cypress/e2e/`.
-- Run tests with: `npx cypress open`
 
 ---
 
