@@ -73,7 +73,7 @@ const More: React.FC = () => {
         {/* User Profile Section */}
         <div className="profile-section">
           <IonAvatar className="profile-avatar">
-            <img src="/src/pages/images/CloseUpHockey.jpg" alt="Profile" />
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDrOejQD5lT9TdAkM711Abp1omZWQ2-chdxg&s" alt="Profile" />
           </IonAvatar>
           <h2>{userEmail}</h2>
           <p>Hockey Fan</p>
