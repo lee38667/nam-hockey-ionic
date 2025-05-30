@@ -104,7 +104,7 @@ const LoginPage: React.FC = () => {
                 <IonCardContent>
                   <div className="ion-text-center ion-padding">
                     <img 
-                      src="/src/pages/images/SplashScreen.png" 
+                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDrOejQD5lT9TdAkM711Abp1omZWQ2-chdxg&s" 
                       alt="Namibia Hockey Logo" 
                       className="login-logo"
                     />
