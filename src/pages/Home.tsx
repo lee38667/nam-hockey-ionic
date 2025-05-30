@@ -77,7 +77,7 @@ const Home: React.FC = () => {
 
         {/* Hero Section */}
         <div className="hero-section">
-          <IonImg src="/src/pages/images/hockey-players.jpg" alt="Hockey Players" />
+          <IonImg src="https://niiha.com/wp-content/uploads/2023/08/362301901_863814382412443_980365601886723632_n-1.jpg" alt="Hockey Players" />
           <div className="hero-overlay ">
             <h1>Welcome to Namibia Hockey</h1>
             <p>Your source for Namibian hockey news, scores, and updates</p>
@@ -166,4 +166,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home; 
+export default Home;

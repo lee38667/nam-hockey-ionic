@@ -122,4 +122,4 @@ Each file represents a screen in the app (e.g., `Home.tsx`, `Matches.tsx`, `Team
 
 ---
 
-For further details, refer to the inline comments in the source code or contact the project maintainer.
+For further details, refer to the inline comments in the source code.

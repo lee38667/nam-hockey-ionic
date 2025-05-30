@@ -31,24 +31,31 @@
 }
 .hero-overlay h1 {
   margin: 0;
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 0.5rem;
 }
 
 .hero-overlay p {
   margin: 8px 0 0;
-  font-size: 16px;
-  opacity: 0.9;
+  font-size: 1.1rem;
+  opacity: 0.95;
+  margin-bottom: 0;
 }
 
 .quick-access-card {
   height: 100%;
   margin: 10px;
   transition: transform 0.2s ease-in-out;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10), 0 1.5px 4px rgba(0,0,0,0.08);
+  background: #fff;
 }
-
 .quick-access-card:hover {
   transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.16), 0 3px 8px rgba(0,0,0,0.12);
+  transform: translateY(-2px) scale(1.01);
 }
 
 .match-preview {
@@ -91,9 +98,10 @@
 
 .league-table th,
 .league-table td {
-  padding: 8px;
+  padding: 10px 6px;
   text-align: center;
   border-bottom: 1px solid var(--ion-color-light);
+  font-size: 1.05rem;
 }
 
 .league-table th {
@@ -109,15 +117,19 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .hero-section {
-    height: 200px;
+    height: 180px;
   }
 
   .hero-overlay h1 {
-    font-size: 20px;
+    font-size: 1.3rem;
   }
 
   .hero-overlay p {
     font-size: 14px;
+  }
+
+  .IonCardTitle, .IonCardTitle h2, .IonCardTitle h3 {
+    font-size: 1.1rem;
   }
 }
 
@@ -134,4 +146,73 @@
   .league-table td {
     border-bottom-color: #3a3a3a;
   }
-} 
+}
+
+/* Modern Card Styles */
+.quick-access-card, .status-stats-card, .featured-team, .team-item {
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10), 0 1.5px 4px rgba(0,0,0,0.08);
+  background: #133065;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.quick-access-card:hover, .status-stats-card:hover, .featured-team:hover, .team-item:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.16), 0 3px 8px rgba(0,0,0,0.12);
+  transform: translateY(-2px) scale(1.01);
+}
+
+/* List Avatars and Chips */
+.team-item ion-avatar img {
+  border-radius: 50%;
+  border: 2px solid var(--ion-color-primary);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.team-item ion-chip {
+  font-size: 0.9em;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 0 10px;
+}
+
+/* Typography Improvements */
+.hero-overlay h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 0.5rem;
+}
+.hero-overlay p {
+  font-size: 1.1rem;
+  opacity: 0.95;
+  margin-bottom: 0;
+}
+.IonCardTitle, .IonCardTitle h2, .IonCardTitle h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.league-table th, .league-table td {
+  font-size: 1.05rem;
+  padding: 10px 6px;
+}
+
+/* Spacing Improvements */
+.IonCardContent, .IonCardHeader {
+  padding-left: 1.2rem;
+  padding-right: 1.2rem;
+}
+.IonList, .IonGrid {
+  margin-bottom: 1.5rem;
+}
+
+/* Responsive Tweaks */
+@media (max-width: 768px) {
+  .hero-section {
+    height: 180px;
+  }
+  .hero-overlay h1 {
+    font-size: 1.3rem;
+  }
+  .IonCardTitle, .IonCardTitle h2, .IonCardTitle h3 {
+    font-size: 1.1rem;
+  }
+}

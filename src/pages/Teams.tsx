@@ -153,7 +153,7 @@ const Teams: React.FC = () => {
               <IonCard className="featured-team">
                 <div className="team-banner">
                   <img 
-                    src={featuredTeam.bannerUrl || "/src/pages/images/CloseUpHockey.jpg"} 
+                    src={featuredTeam.bannerUrl || "https://niiha.com/wp-content/uploads/2023/08/363755499_867501525377062_5106207238678423081_n-1.jpg"} 
                     alt={`${featuredTeam.name} Banner`} 
                   />
                   <div className="team-overlay">
@@ -176,7 +176,7 @@ const Teams: React.FC = () => {
                 >
                   <IonAvatar slot="start">
                     <img 
-                      src={team.imageUrl || "/src/pages/images/CloseUpHockey.jpg"} 
+                      src={team.imageUrl || "https://niiha.com/wp-content/uploads/2023/08/363755499_867501525377062_5106207238678423081_n-1.jpg"} 
                       alt={team.name} 
                     />
                   </IonAvatar>

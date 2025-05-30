@@ -356,4 +356,109 @@ ion-button {
 
 .dark-theme ion-button {
   --color: #ffffff;
-} 
+}
+
+/* --- GLOBAL DARK MODE OVERRIDES --- */
+body.dark, [data-theme="dark"] {
+  --ion-background-color: #181a20;
+  --ion-background-color-rgb: 24,26,32;
+  --ion-text-color: #f5f5f5;
+  --ion-text-color-rgb: 245,245,245;
+  --ion-toolbar-background: #23243a;
+  --ion-toolbar-text-color: #f5f5f5;
+  --ion-tab-bar-background: #23243a;
+  --ion-tab-bar-border-color: #23243a;
+  --ion-tab-bar-color: #bfc6e0;
+  --ion-tab-bar-color-selected: #ffd700;
+  --ion-card-background: #23243a;
+  --ion-item-background: #23243a;
+  --ion-color-light: #23243a;
+  --ion-color-medium: #bfc6e0;
+  --ion-color-dark: #f5f5f5;
+  --ion-color-primary: #ffd700;
+  --ion-color-primary-contrast: #23243a;
+  --ion-color-secondary: #1a365d;
+  --ion-color-secondary-contrast: #ffd700;
+  --ion-color-success: #2ce95b;
+  --ion-color-warning: #ffd534;
+  --ion-color-danger: #ff4961;
+  --ion-color-tertiary: #ffe705;
+  --ion-font-family: 'Roboto', sans-serif;
+}
+
+body.dark ion-content,
+body.dark ion-card,
+body.dark ion-item,
+body.dark ion-toolbar,
+body.dark ion-header,
+body.dark ion-list,
+body.dark ion-searchbar {
+  --background: #23243a !important;
+  color: #f5f5f5 !important;
+}
+
+body.dark ion-header,
+body.dark ion-toolbar {
+  --background: #23243a !important;
+  --color: #ffd700 !important;
+  background: #23243a !important;
+  color: #ffd700 !important;
+  border-bottom: 1px solid #333 !important;
+}
+
+body.dark ion-title,
+body.dark ion-toolbar ion-title {
+  color: #ffd700 !important;
+}
+
+body.dark ion-label,
+body.dark ion-text,
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4,
+body.dark h5,
+body.dark h6,
+body.dark p {
+  color: #f5f5f5 !important;
+}
+
+body.dark .score-card,
+body.dark .league-table th,
+body.dark .league-table td {
+  background: #23243a !important;
+  color: #f5f5f5 !important;
+}
+
+body.dark .stat-item span,
+body.dark .stat-item small {
+  color: #ffd700 !important;
+}
+
+body.dark .status-chip span {
+  color: #23243a !important;
+}
+
+body.dark .add-match-modal {
+  background: #23243a !important;
+  color: #f5f5f5 !important;
+}
+body.dark .add-match-modal input,
+body.dark .add-match-modal select {
+  background: #181a20 !important;
+  color: #f5f5f5 !important;
+  border: 1px solid #333 !important;
+}
+body.dark .add-match-modal input:focus,
+body.dark .add-match-modal select:focus {
+  border: 1.5px solid #ffd700 !important;
+}
+body.dark .add-match-modal button,
+body.dark .add-match-modal .ion-button {
+  background: #ffd700 !important;
+  color: #23243a !important;
+}
+body.dark .add-match-modal button:hover,
+body.dark .add-match-modal .ion-button:hover {
+  background: #ffe705cc !important;
+}

@@ -19,7 +19,6 @@
   --border-radius: 8px;
   --box-shadow: var(--ion-box-shadow);
 }
-
 .matches-segment {
   --background: transparent;
   --color: var(--ion-color-light);
@@ -28,8 +27,36 @@
 
 .matches-segment ion-segment-button {
   --color: var(--ion-color-medium);
-  --color-checked: var(--ion-color-light);
-  --indicator-color: var(--ion-color-light);
+  --color-checked: var(--ion-color-primary);
+  --background-checked: #e6eaff;
+  --background: transparent;
+  --indicator-color: var(--ion-color-primary);
+  font-weight: 600;
+  border-radius: 12px;
+  transition: background 0.2s;
+}
+
+.matches-segment ion-segment-button[aria-checked="true"] {
+  background: #e6eaff;
+  color: var(--ion-color-primary);
+}
+
+/* Remove iOS 'Done' button requirement by forcing segment to always be visible and interactive */
+ion-segment {
+  touch-action: manipulation;
+}
+
+.matches-search {
+  --background: #2a2a2a;
+}
+
+.matches-segment {
+  --background: #ffffff;
+  --color: var(--ion-color-light);
+}
+
+.matches-segment ion-segment-button {
+  --color: var(--ion-color-medium);
 }
 
 .match-card {
@@ -168,4 +195,63 @@
   .detail-item {
     color: #ffffff;
   }
-} 
+}
+
+body.dark .matches-header {
+  background: #1a1a2e;
+}
+body.dark .matches-segment {
+  --background: #23234a;
+  --color: #bfc6e0;
+  --color-checked: #ffe705;
+  --indicator-color: #ffe705;
+}
+body.dark .matches-segment ion-segment-button {
+  --color: #bfc6e0;
+  --color-checked: #ffe705;
+  --background-checked: #23234a;
+  --background: transparent;
+}
+body.dark .matches-segment ion-segment-button[aria-checked="true"] {
+  background: #23234a;
+  color: #ffe705;
+}
+body.dark .match-card {
+  background: #23234a !important;
+  color: #fff;
+}
+body.dark .match-header,
+body.dark .match-content,
+body.dark .team span,
+body.dark .score,
+body.dark .time,
+body.dark .detail-item {
+  color: #fff !important;
+}
+body.dark .match-details {
+  border-top: 1px solid #2a2a4a;
+}
+body.dark .add-match-modal {
+  background: #23234a;
+  color: #fff;
+}
+body.dark .add-match-modal input,
+body.dark .add-match-modal select {
+  background: #1a1a2e;
+  color: #fff;
+  border: 1px solid #333;
+}
+body.dark .add-match-modal input:focus,
+body.dark .add-match-modal select:focus {
+  border: 1.5px solid #ffe705;
+}
+body.dark .add-match-modal button,
+body.dark .add-match-modal .ion-button {
+  background: #ffe705;
+  color: #23234a;
+}
+body.dark .add-match-modal button:hover,
+body.dark .add-match-modal .ion-button:hover {
+  background: #ffe705cc;
+}
+

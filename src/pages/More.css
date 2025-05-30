@@ -26,6 +26,19 @@
   color: var(--ion-color-medium);
 }
 
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .profile-section {
+    background: #23243a !important;
+  }
+  .profile-section h2 {
+    color: #ffd700 !important;
+  }
+  .profile-section p {
+    color: #bfc6e0 !important;
+  }
+}
+
 ion-item-divider {
   --background: var(--ion-color-light);
   --color: var(--ion-color-medium);
@@ -57,23 +70,3 @@ ion-item ion-icon {
   color: var(--ion-color-medium);
   font-size: 12px;
 }
-
-/* Dark Mode Support */
-@media (prefers-color-scheme: dark) {
-  
-  .profile-section {
-    background: #fdfdfd;
-  }
-
-  .profile-section h2 {
-    color: rgb(54, 54, 54);
-  }
-
-  ion-item-divider {
-    --background: #2a2a2a;
-  }
-
-  .logout-item {
-    --background: #ffffff;
-  }
-} 

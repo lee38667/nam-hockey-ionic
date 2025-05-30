@@ -21,6 +21,7 @@ import {
 import { useState } from 'react';
 import { addMatch } from '../firebase/matchService';
 import { Timestamp } from 'firebase/firestore';
+import '../pages/Matches.css'; // Assuming you have some styles for the modal
 
 interface AddMatchModalProps {
   isOpen: boolean;
