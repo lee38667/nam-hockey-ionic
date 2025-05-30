@@ -14,7 +14,8 @@ NAM Hockey is a cross-platform mobile application built with Ionic and React, de
 5. [Testing](#testing)
 6. [Running the App](#running-the-app)
 7. [Build & Deployment](#build--deployment)
-8. [Resources](#resources)
+8. [Styling & Theming](#styling--theming)
+9. [Resources](#resources)
 
 ---
 
@@ -32,7 +33,7 @@ Root
 │   vite.config.ts
 ├── android/                # Android native project files
 ├── cypress/                # End-to-end tests (Cypress)
-├── public/                 # Static assets
+├── public/                 # Static assets (images, icons, manifest)
 ├── resources/              # App icons and splash screens
 └── src/                    # Main source code
     ├── App.tsx             # Main app component
@@ -53,6 +54,7 @@ Root
 - News and events
 - Profile management
 - Responsive UI with Ionic components
+- Light and dark mode support
 
 ---
 
@@ -62,7 +64,7 @@ Root
 Reusable UI components such as modals (`AddMatchModal.tsx`, `AddTeamModal.tsx`), containers, and custom elements.
 
 ### src/pages/
-Each file represents a screen in the app (e.g., `Home.tsx`, `Matches.tsx`, `Teams.tsx`, `Profile.tsx`).
+Each file represents a screen in the app (e.g., `Home.tsx`, `Matches.tsx`, `Teams.tsx`, `Profile.tsx`, `More.tsx`).
 
 ### src/firebase/
 - `auth.ts`, `firebaseAuth.ts`: Authentication logic
@@ -71,9 +73,8 @@ Each file represents a screen in the app (e.g., `Home.tsx`, `Matches.tsx`, `Team
 - `matchService.ts`, `newsService.ts`, `playerService.ts`, `teamService.ts`, `storageService.ts`: Service files for CRUD operations
 
 ### src/theme/
-- `global.css`: Global styles
+- `global.css`: Global styles and dark mode overrides
 - `variables.css`: CSS variables for theming
-
 
 ---
 
@@ -82,6 +83,13 @@ Each file represents a screen in the app (e.g., `Home.tsx`, `Matches.tsx`, `Team
 - Authentication, Firestore, and Storage are used for user data, app data, and media.
 
 ---
+
+## Testing
+- Cypress is used for E2E testing. Test files are in `cypress/e2e/`.
+- Run tests with:
+  ```powershell
+  npx cypress open
+  ```
 
 ---
 
@@ -111,6 +119,16 @@ Each file represents a screen in the app (e.g., `Home.tsx`, `Matches.tsx`, `Team
   npx cap sync
   ```
 - Deploy to Android/iOS using Capacitor.
+
+---
+
+## Styling & Theming
+- The app uses Ionic’s CSS variables and custom styles for a modern, responsive UI.
+- Light and dark mode are fully supported. Dark mode can be toggled in the app or follows the system preference.
+- Main styling files:
+  - `src/theme/variables.css`: Color palette, spacing, and theme variables for both light and dark modes.
+  - `src/theme/global.css`: Global styles, dark mode overrides, and component tweaks.
+  - Page/component-specific CSS files (e.g., `Home.css`, `Teams.css`, `Matches.css`, `More.css`).
 
 ---
 
