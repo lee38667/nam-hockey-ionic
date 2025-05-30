@@ -1,0 +1,257 @@
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.matches-header {
+  padding: 16px;
+  background: var(--ion-color-light);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.matches-search {
+  margin-bottom: 16px;
+  --background: white;
+  --border-radius: 8px;
+  --box-shadow: var(--ion-box-shadow);
+}
+.matches-segment {
+  --background: transparent;
+  --color: var(--ion-color-light);
+  --color-checked: var(--ion-color-primary);
+}
+
+.matches-segment ion-segment-button {
+  --color: var(--ion-color-medium);
+  --color-checked: var(--ion-color-primary);
+  --background-checked: #e6eaff;
+  --background: transparent;
+  --indicator-color: var(--ion-color-primary);
+  font-weight: 600;
+  border-radius: 12px;
+  transition: background 0.2s;
+}
+
+.matches-segment ion-segment-button[aria-checked="true"] {
+  background: #e6eaff;
+  color: var(--ion-color-primary);
+}
+
+/* Remove iOS 'Done' button requirement by forcing segment to always be visible and interactive */
+ion-segment {
+  touch-action: manipulation;
+}
+
+.matches-search {
+  --background: #2a2a2a;
+}
+
+.matches-segment {
+  --background: #ffffff;
+  --color: var(--ion-color-light);
+}
+
+.matches-segment ion-segment-button {
+  --color: var(--ion-color-medium);
+}
+
+.match-card {
+  margin: 16px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--ion-box-shadow);
+  color: white;
+}
+
+.match-card.live {
+  border-left: 4px solid var(--ion-color-danger);
+}
+
+.match-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  color: white;
+}
+
+.match-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  color: white;
+}
+
+.team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.team img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.team span {
+  font-weight: 500;
+  text-align: center;
+  color: white;
+}
+
+.score {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}
+
+.time {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: white;
+}
+
+.match-details {
+  margin-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.detail-item ion-icon {
+  font-size: 16px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .team img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .score {
+    font-size: 20px;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .matches-search {
+    --background: #2a2a2a;
+  }
+
+  .matches-segment {
+    --background: #ffffff;
+    --color: var(--ion-color-light);
+  }
+
+  .matches-segment ion-segment-button {
+    --color: var(--ion-color-medium);
+  }
+
+  .match-card {
+    --background: #133065;
+    
+  }
+
+  .match-details {
+    border-top-color: #ededed5e;
+  }
+
+  .team img {
+    border-color: #3a3a3a;
+  }
+
+  .team span {
+    color: #ffffff;
+  }
+
+  .score {
+    color: #ffffff;
+  }
+
+  .time {
+    color: #a6a6a6;
+  }
+
+  .detail-item {
+    color: #ffffff;
+  }
+}
+
+body.dark .matches-header {
+  background: #1a1a2e;
+}
+body.dark .matches-segment {
+  --background: #23234a;
+  --color: #bfc6e0;
+  --color-checked: #ffe705;
+  --indicator-color: #ffe705;
+}
+body.dark .matches-segment ion-segment-button {
+  --color: #bfc6e0;
+  --color-checked: #ffe705;
+  --background-checked: #23234a;
+  --background: transparent;
+}
+body.dark .matches-segment ion-segment-button[aria-checked="true"] {
+  background: #23234a;
+  color: #ffe705;
+}
+body.dark .match-card {
+  background: #23234a !important;
+  color: #fff;
+}
+body.dark .match-header,
+body.dark .match-content,
+body.dark .team span,
+body.dark .score,
+body.dark .time,
+body.dark .detail-item {
+  color: #fff !important;
+}
+body.dark .match-details {
+  border-top: 1px solid #2a2a4a;
+}
+body.dark .add-match-modal {
+  background: #23234a;
+  color: #fff;
+}
+body.dark .add-match-modal input,
+body.dark .add-match-modal select {
+  background: #1a1a2e;
+  color: #fff;
+  border: 1px solid #333;
+}
+body.dark .add-match-modal input:focus,
+body.dark .add-match-modal select:focus {
+  border: 1.5px solid #ffe705;
+}
+body.dark .add-match-modal button,
+body.dark .add-match-modal .ion-button {
+  background: #ffe705;
+  color: #23234a;
+}
+body.dark .add-match-modal button:hover,
+body.dark .add-match-modal .ion-button:hover {
+  background: #ffe705cc;
+}
+

@@ -1,0 +1,464 @@
+/* Global Variables */
+:root {
+  /* Colors */
+  --primary-color: #3880ff;
+  --primary-hover: #3171e0;
+  --success-color: #2dd36f;
+  --warning-color: #ffc409;
+  --danger-color: #eb445a;
+  --dark-color: #222428;
+  --medium-color: #92949c;
+  --light-color: #f4f5f8;
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* Border Radius */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 6px 16px rgba(0, 0, 0, 0.15);
+
+  /* Typography */
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 20px;
+  --font-size-xl: 24px;
+}
+
+/* Base Styles */
+ion-content {
+  --background: var(--light-color);
+}
+
+ion-card {
+  
+  margin: var(--spacing-md);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+ion-item {
+  --background: #ffffff;
+  --border-radius: var(--border-radius-md);
+  margin-bottom: var(--spacing-sm);
+  --padding-start: var(--spacing-md);
+  --padding-end: var(--spacing-md);
+  --padding-top: var(--spacing-sm);
+  --padding-bottom: var(--spacing-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+ion-button {
+  --border-radius: var(--border-radius-md);
+  --box-shadow: var(--shadow-md);
+  font-weight: 600;
+  height: 48px;
+}
+
+/* Common Components */
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--spacing-md) 0;
+}
+
+.stat-item ion-icon {
+  font-size: var(--font-size-xl);
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-sm);
+}
+
+.stat-item span {
+  font-size: var(--font-size-lg);
+  font-weight: bold;
+  color: var(--dark-color);
+}
+
+.stat-item small {
+  font-size: var(--font-size-xs);
+  color: var(--medium-color);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: var(--spacing-xs);
+}
+
+/* Status Chips */
+.status-chip {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--spacing-sm);
+}
+
+.status-chip span {
+  font-size: var(--font-size-lg);
+  font-weight: bold;
+  color: white;
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --light-color: #1e1e1e;
+    --dark-color: #ffffff;
+    --medium-color: #a0a0a0;
+  }
+
+  ion-content {
+    --background: #1e1e1e;
+  }
+
+  ion-item {
+    --background: #2a2a2a;
+  }
+
+  ion-card {
+    --background: #2a2a2a;
+  }
+
+  ion-toolbar {
+    --background: #2a2a2a;
+  }
+
+  ion-header {
+    --background: #2a2a2a;
+  }
+
+  ion-list {
+    background: transparent;
+  }
+
+  ion-searchbar {
+    --background: #2a2a2a;
+  }
+
+  .stat-item span {
+    color: var(--dark-color);
+  }
+
+  .stat-item small {
+    color: var(--medium-color);
+  }
+
+  /* Ensure all text is visible in dark mode */
+  h1, h2, h3, h4, h5, h6, p, ion-label, ion-text {
+    color: var(--dark-color);
+  }
+
+  /* Ensure inputs and form elements are visible */
+  ion-input, ion-textarea, ion-select {
+    --background: #ffffff;
+    --color: var(--dark-color);
+  }
+
+  /* Ensure buttons are visible */
+  ion-button {
+    --background: #3880ff;
+    --color: white;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  :root {
+    --spacing-md: 12px;
+    --spacing-lg: 20px;
+    --font-size-lg: 18px;
+    --font-size-xl: 20px;
+  }
+}
+
+/* Global styles for the app */
+
+/* Light mode colors */
+:root {
+  --ion-background-color: #f4f5f8;
+  --ion-color-dark:#ffffff;
+  --ion-color-light:white;
+  --ion-background-color-rgb: 244, 245, 248;
+  --ion-card-background: #133065;
+  --ion-toolbar-background: #ffffff;
+  --ion-tab-bar-background: #ffffff;
+  --ion-item-background: #ffffff;
+  --ion-color-primary: #3880ff;
+  --ion-color-primary-rgb: 56, 128, 255;
+  --ion-color-secondary: #3dc2ff;
+  --ion-color-secondary-rgb: 61, 194, 255;
+  --ion-color-tertiary: #5260ff;
+  --ion-color-tertiary-rgb: 82, 96, 255;
+  --ion-color-success: #2dd36f;
+  --ion-color-success-rgb: 45, 211, 111;
+  --ion-color-warning: #ffc409;
+  --ion-color-warning-rgb: 255, 196, 9;
+  --ion-color-danger: #eb445a;
+  --ion-color-danger-rgb: 235, 68, 90;
+  --ion-color-medium: #92949c;
+  --ion-color-medium-rgb: 146, 148, 156;
+  --ion-color-light: #f4f5f8;
+  --ion-color-light-rgb: 244, 245, 248;
+}
+
+/* Card styles */
+ion-card {
+  --background: var(--ion-card-background);
+  margin: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Content styles */
+ion-content {
+  --background: var(--ion-background-color);
+}
+
+/* Toolbar styles */
+ion-toolbar {
+  --background: var(--ion-toolbar-background);
+  --border-color: var(--ion-color-light);
+}
+
+/* Tab bar styles */
+ion-tab-bar {
+  --background: var(--ion-tab-bar-background);
+  --border-color: var(--ion-color-light);
+}
+
+/* Item styles */
+ion-item {
+  --background: var(--ion-item-background);
+  --border-color: var(--ion-color-light);
+  margin-bottom: 8px;
+}
+
+/* List styles */
+ion-list {
+  background: transparent;
+  padding: 0;
+}
+
+/* Grid styles */
+ion-grid {
+  padding: 16px;
+}
+
+/* Text colors */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--ion-color-dark);
+}
+
+p {
+  color: var(--ion-color-medium);
+}
+
+/* Button styles */
+ion-button {
+  --border-radius: 4px;
+  --box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode colors - only applied when .dark-theme class is present */
+.dark-theme {
+  --ion-background-color: #1e1e1e;
+  --ion-background-color-rgb: 30, 30, 30;
+  --ion-card-background: #2d2d2d;
+  --ion-toolbar-background: #2d2d2d;
+  --ion-tab-bar-background: #2d2d2d;
+  --ion-item-background: #2d2d2d;
+  --ion-text-color: #ffffff;
+  --ion-text-color-rgb: 255, 255, 255;
+  --ion-color-step-50: #333333;
+  --ion-color-step-100: #404040;
+  --ion-color-step-150: #4d4d4d;
+  --ion-color-step-200: #595959;
+  --ion-color-step-250: #666666;
+  --ion-color-step-300: #737373;
+  --ion-color-step-350: #808080;
+  --ion-color-step-400: #8c8c8c;
+  --ion-color-step-450: #999999;
+  --ion-color-step-500: #a6a6a6;
+  --ion-color-step-550: #b3b3b3;
+  --ion-color-step-600: #bfbfbf;
+  --ion-color-step-650: #cccccc;
+  --ion-color-step-700: #d9d9d9;
+  --ion-color-step-750: #e6e6e6;
+  --ion-color-step-800: #f2f2f2;
+  --ion-color-step-850: #ffffff;
+  --ion-color-step-900: #ffffff;
+  --ion-color-step-950: #ffffff;
+}
+
+.dark-theme ion-card {
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}
+
+.dark-theme h1,
+.dark-theme h2,
+.dark-theme h3,
+.dark-theme h4,
+.dark-theme h5,
+.dark-theme h6,
+.dark-theme p,
+.dark-theme ion-label,
+.dark-theme ion-text {
+  color: #ffffff;
+}
+
+.dark-theme ion-icon {
+  color: #fdfdfd; /* Default icon color */
+}
+
+/* Custom colors for specific icons */
+.dark-theme ion-icon[name="home-outline"],
+.dark-theme ion-icon[name="calendar-outline"],
+.dark-theme ion-icon[name="people-outline"],
+.dark-theme ion-icon[name="newspaper-outline"],
+.dark-theme ion-icon[name="menu-outline"] {
+  color: #3880ff; /* Primary blue color for tab bar icons */
+}
+
+.dark-theme ion-icon[name="time-outline"],
+.dark-theme ion-icon[name="share-outline"],
+.dark-theme ion-icon[name="bookmark-outline"] {
+  color: #3dc2ff; /* Secondary blue color for action icons */
+}
+
+.dark-theme ion-icon[name="trophy-outline"],
+.dark-theme ion-icon[name="stats-chart-outline"] {
+  color: #2dd36f; /* Success green color for stats icons */
+}
+
+.dark-theme ion-item {
+  --color: #ffffff;
+}
+
+.dark-theme ion-searchbar {
+  --color: #ffffff;
+  --placeholder-color: #a6a6a6;
+}
+
+.dark-theme ion-chip {
+  --color: #ffffff;
+}
+
+.dark-theme ion-button {
+  --color: #ffffff;
+}
+
+/* --- GLOBAL DARK MODE OVERRIDES --- */
+body.dark, [data-theme="dark"] {
+  --ion-background-color: #181a20;
+  --ion-background-color-rgb: 24,26,32;
+  --ion-text-color: #f5f5f5;
+  --ion-text-color-rgb: 245,245,245;
+  --ion-toolbar-background: #23243a;
+  --ion-toolbar-text-color: #f5f5f5;
+  --ion-tab-bar-background: #23243a;
+  --ion-tab-bar-border-color: #23243a;
+  --ion-tab-bar-color: #bfc6e0;
+  --ion-tab-bar-color-selected: #ffd700;
+  --ion-card-background: #23243a;
+  --ion-item-background: #23243a;
+  --ion-color-light: #23243a;
+  --ion-color-medium: #bfc6e0;
+  --ion-color-dark: #f5f5f5;
+  --ion-color-primary: #ffd700;
+  --ion-color-primary-contrast: #23243a;
+  --ion-color-secondary: #1a365d;
+  --ion-color-secondary-contrast: #ffd700;
+  --ion-color-success: #2ce95b;
+  --ion-color-warning: #ffd534;
+  --ion-color-danger: #ff4961;
+  --ion-color-tertiary: #ffe705;
+  --ion-font-family: 'Roboto', sans-serif;
+}
+
+body.dark ion-content,
+body.dark ion-card,
+body.dark ion-item,
+body.dark ion-toolbar,
+body.dark ion-header,
+body.dark ion-list,
+body.dark ion-searchbar {
+  --background: #23243a !important;
+  color: #f5f5f5 !important;
+}
+
+body.dark ion-header,
+body.dark ion-toolbar {
+  --background: #23243a !important;
+  --color: #ffd700 !important;
+  background: #23243a !important;
+  color: #ffd700 !important;
+  border-bottom: 1px solid #333 !important;
+}
+
+body.dark ion-title,
+body.dark ion-toolbar ion-title {
+  color: #ffd700 !important;
+}
+
+body.dark ion-label,
+body.dark ion-text,
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4,
+body.dark h5,
+body.dark h6,
+body.dark p {
+  color: #f5f5f5 !important;
+}
+
+body.dark .score-card,
+body.dark .league-table th,
+body.dark .league-table td {
+  background: #23243a !important;
+  color: #f5f5f5 !important;
+}
+
+body.dark .stat-item span,
+body.dark .stat-item small {
+  color: #ffd700 !important;
+}
+
+body.dark .status-chip span {
+  color: #23243a !important;
+}
+
+body.dark .add-match-modal {
+  background: #23243a !important;
+  color: #f5f5f5 !important;
+}
+body.dark .add-match-modal input,
+body.dark .add-match-modal select {
+  background: #181a20 !important;
+  color: #f5f5f5 !important;
+  border: 1px solid #333 !important;
+}
+body.dark .add-match-modal input:focus,
+body.dark .add-match-modal select:focus {
+  border: 1.5px solid #ffd700 !important;
+}
+body.dark .add-match-modal button,
+body.dark .add-match-modal .ion-button {
+  background: #ffd700 !important;
+  color: #23243a !important;
+}
+body.dark .add-match-modal button:hover,
+body.dark .add-match-modal .ion-button:hover {
+  background: #ffe705cc !important;
+}

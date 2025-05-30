@@ -1,0 +1,162 @@
+.register-card {
+  margin: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  will-change: transform, opacity;
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+.register-logo {
+  width: 120px;
+  height: 120px;
+  border-radius: 60px;
+  object-fit: cover;
+  margin-bottom: 16px;
+  border: 3px solid var(--ion-color-primary);
+  animation: logoFadeIn 0.5s ease-out;
+}
+
+@keyframes logoFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.custom-input {
+  --background: transparent;
+  --border-color: var(--ion-color-medium);
+  --border-radius: 8px;
+  --border-width: 1px;
+  --border-style: solid;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  margin-bottom: 16px;
+  animation: slideUp 0.5s ease-out;
+  animation-fill-mode: both;
+}
+
+.custom-input:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.custom-input:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.custom-input:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.custom-input:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.custom-input-field {
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  font-size: 16px;
+}
+
+.login-button {
+  --color: var(--ion-color-primary);
+  font-weight: 500;
+  margin-top: 8px;
+  transition: transform 0.2s ease-out;
+}
+
+.login-button:hover {
+  transform: scale(1.05);
+}
+
+ion-button {
+  --border-radius: 8px;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 24px;
+  height: 48px;
+  font-weight: 600;
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+ion-button:hover {
+  transform: translateY(-2px);
+  --box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.register-card ion-card-content {
+  padding: 1rem;
+}
+
+.register-card h2 {
+  margin: 1rem 0 0.5rem;
+  color: var(--ion-color-dark);
+  font-weight: 600;
+  animation: fadeIn 0.5s ease-out;
+  animation-delay: 0.3s;
+  animation-fill-mode: both;
+}
+
+.register-card p {
+  color: var(--ion-color-medium);
+  margin: 0 0 1.5rem;
+  animation: fadeIn 0.5s ease-out;
+  animation-delay: 0.4s;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.register-card ion-item {
+  --background: transparent;
+  --border-color: var(--ion-color-light);
+  margin-bottom: 1rem;
+}
+
+.register-card ion-label {
+  color: var(--ion-color-medium);
+}
+
+.register-card ion-input {
+  --padding-start: 0.5rem;
+  color: var(--ion-color-dark);
+}
+
+.register-card ion-text p {
+  font-size: 0.9rem;
+  margin: 1rem 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .register-card {
+    margin-top: 1rem;
+  }
+  
+  .register-card ion-card-content {
+    padding: 0.5rem;
+  }
+} 

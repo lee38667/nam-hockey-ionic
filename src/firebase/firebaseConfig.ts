@@ -21,4 +21,52 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export default app;
-export { db }; 
+export { db };
+
+// Function to initialize sample teams
+export const initializeTeams = async () => {
+  const teamsRef = collection(db, 'teams');
+  
+  const sampleTeams = [
+    {
+      name: 'National Team',
+      division: 'Premier League',
+      playerCount: 25,
+      titles: 3,
+      status: 'champion',
+      imageUrl: 'https://example.com/national-team.png',
+      bannerUrl: 'https://example.com/national-team-banner.jpg',
+      description: 'Premier League Champions'
+    },
+    {
+      name: 'Team A',
+      division: 'Division 1',
+      playerCount: 15,
+      status: 'active',
+      imageUrl: 'https://example.com/team-a.png'
+    },
+    {
+      name: 'Team B',
+      division: 'Premier League',
+      playerCount: 20,
+      status: 'champion',
+      imageUrl: 'https://example.com/team-b.png'
+    },
+    {
+      name: 'Team C',
+      division: 'Division 2',
+      playerCount: 18,
+      status: 'promoted',
+      imageUrl: 'https://example.com/team-c.png'
+    }
+  ];
+
+  try {
+    for (const team of sampleTeams) {
+      await addDoc(teamsRef, team);
+    }
+    console.log('Sample teams added successfully');
+  } catch (error) {
+    console.error('Error adding sample teams:', error);
+  }
+}; 

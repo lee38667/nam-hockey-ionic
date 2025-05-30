@@ -1,0 +1,70 @@
+.register-team-card {
+  margin: 16px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  background: var(--ion-card-background);
+}
+
+.register-team-card ion-card-content {
+  padding: 20px;
+}
+
+.register-team-card ion-item {
+  --background: transparent;
+  --border-color: var(--ion-color-light);
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  margin-bottom: 16px;
+}
+
+.register-team-card ion-label {
+  color: var(--ion-color-dark);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.register-team-card ion-input,
+.register-team-card ion-select,
+.register-team-card ion-textarea {
+  --background: var(--ion-color-light);
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  border-radius: 8px;
+  margin-top: 8px;
+}
+
+.register-team-card ion-button {
+  margin-top: 24px;
+  --border-radius: 8px;
+  height: 48px;
+  font-weight: 600;
+  --color: white;
+}
+
+.register-team-card ion-button ion-icon {
+  color: white;
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .register-team-card {
+    --background: #133065;
+  }
+
+  .register-team-card ion-label {
+    color: var(--ion-color-light);
+  }
+
+  .register-team-card ion-input,
+  .register-team-card ion-select,
+  .register-team-card ion-textarea {
+    --background: rgba(255, 255, 255, 0.1);
+    color: var(--ion-color-light);
+  }
+
+  .register-team-card ion-item {
+    --border-color: rgba(255, 255, 255, 0.1);
+  }
+} 

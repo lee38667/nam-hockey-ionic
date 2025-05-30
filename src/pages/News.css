@@ -1,0 +1,144 @@
+.news-header {
+  padding: 16px;
+  background: var(--ion-color-light);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+colorPurple {
+  color:#15144e
+}
+.news-search {
+  --background: #a1a1a1;
+  --color: #ffffff;
+  --placeholder-color: #a6a6a6;
+  --icon-color: #ffffff;
+  --clear-button-color: #ffffff;
+
+}
+ion-item {
+  --background: #133065 !important; 
+
+}
+
+.featured-news {
+  margin: 16px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--ion-box-shadow);
+}
+
+.featured-news img {
+  width: 100%;
+  height: 700px;
+  object-fit: cover;
+}
+
+.featured-news ion-card-header {
+  padding: 16px;
+  
+}
+
+.featured-news ion-card-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 8px 0;
+}
+
+.featured-news ion-card-subtitle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--ion-color-medium);
+  font-size: 14px;
+}
+
+.featured-news p {
+  margin: 0;
+  color: var(--ion-color-dark);
+  line-height: 1.5;
+}
+
+.news-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.news-item {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+}
+
+.news-item h2 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--ion-color-dark);
+}
+
+.news-item p {
+  font-size: 14px;
+  color: var(--ion-color-medium);
+  margin: 4px 0;
+  line-height: 1.4;
+}
+
+.news-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--ion-color-medium);
+}
+
+.news-meta ion-icon {
+  font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .featured-news img {
+    height: 350px;
+  }
+
+  .featured-news ion-card-title {
+    font-size: 38px;
+  }
+
+  .news-item h2 {
+    font-size: 12px;
+  }
+
+  .news-item p {
+    font-size: 13px;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .news-search {
+    --background: #4a4a4a;
+  }
+
+  .featured-news p {
+    color: var(--ion-color-light);
+  }
+
+  .news-item {
+    --background: #2a2a2a;
+  }
+
+  .news-item h2 {
+    color: var(--ion-color-light);
+  }
+}
+
+.small-chip {
+  --height: 24px;
+  font-size: 12px;
+  margin: 0;
+} 

@@ -1,0 +1,98 @@
+.login-card {
+  margin: 0;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+}
+
+.login-logo {
+  width: 120px;
+  height: 120px;
+  border-radius: 60px;
+  object-fit: cover;
+  margin-bottom: 16px;
+  border: 3px solid var(--ion-color-primary);
+}
+
+.custom-input {
+  --background: transparent;
+  --border-color: var(--ion-color-medium);
+  --border-radius: 8px;
+  --border-width: 1px;
+  --border-style: solid;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  margin-bottom: 16px;
+}
+
+.custom-input ion-label {
+  color: white !important;
+}
+
+.custom-input-field {
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  font-size: 16px;
+  color: white !important;
+}
+
+.signup-button {
+  --color: var(--ion-color-dark);
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+ion-button {
+  --border-radius: 8px;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 24px;
+  height: 48px;
+  font-weight: 600;
+}
+
+.login-card ion-card-content {
+  padding: 1rem;
+}
+
+.login-card h2 {
+  margin: 1rem 0 0.5rem;
+  color: var(--ion-color-dark);
+  font-weight: 600;
+}
+
+.login-card p {
+  color: var(--ion-color-medium);
+  margin: 0 0 1.5rem;
+}
+
+.login-card ion-item {
+  --background: transparent;
+  --border-color: var(--ion-color-light);
+  margin-bottom: 1rem;
+}
+
+.login-card ion-label {
+  color: white !important;
+}
+
+.login-card ion-input {
+  --padding-start: 0.5rem;
+  color: white !important;
+}
+
+.login-card ion-text p {
+  font-size: 0.9rem;
+  margin: 1rem 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .login-card {
+    margin-top: 1rem;
+  }
+  
+  .login-card ion-card-content {
+    padding: 0.5rem;
+  }
+} 

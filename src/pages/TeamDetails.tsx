@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonLabel, IonText, IonGrid, IonRow, IonCol } from '@ionic/react';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonLabel, IonText, IonGrid, IonRow, IonCol, IonAvatar, IonChip, IonIcon, IonSpinner, IonFab, IonFabButton, IonFabList, IonModal, IonButton, IonInput, IonSelect, IonSelectOption, IonTextarea } from '@ionic/react';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebaseConfig';
-
-interface Player {
-  id: string;
-  name: string;
-}
+import { Team } from '../firebase/teamService';
+import { Player, subscribeToTeamPlayers, addPlayer, getPlayerStats } from '../firebase/playerService';
+// import './TeamDetails.css';
+import { 
+  personAdd, 
+  statsChart, 
+  add 
+} from 'ionicons/icons';
 
 interface MatchResult {
   id: string;
@@ -34,20 +37,23 @@ interface TeamStats {
   points: number;
 }
 
-interface Team {
-  id: string;
-  name: string;
-  roster: Player[];
-  recentResults: MatchResult[];
-  upcomingFixtures: UpcomingFixture[];
-  stats: TeamStats;
-}
-
 const TeamDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [team, setTeam] = useState<Team | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [players, setPlayers] = useState<Player[]>([]);
+  const [showAddPlayer, setShowAddPlayer] = useState(false);
+  const [teamStats, setTeamStats] = useState<any>(null);
+  const [newPlayer, setNewPlayer] = useState<Partial<Player>>({
+    name: '',
+    number: 0,
+    position: 'Forward',
+    age: 0,
+    height: '',
+    weight: 0,
+    status: 'active'
+  });
 
   useEffect(() => {
     const fetchTeamData = async () => {
@@ -77,8 +83,40 @@ const TeamDetails: React.FC = () => {
     };
 
     fetchTeamData();
-
   }, [id]);
+
+  useEffect(() => {
+    if (!id) return;
+
+    const unsubscribe = subscribeToTeamPlayers(id, (playersData) => {
+      setPlayers(playersData);
+      setLoading(false);
+    });
+
+    // Load team stats
+    getPlayerStats(id).then(setTeamStats);
+
+    return () => unsubscribe();
+  }, [id]);
+
+  const handleAddPlayer = async () => {
+    if (!id) return;
+    try {
+      await addPlayer(id, newPlayer as Omit<Player, 'id' | 'teamId'>);
+      setShowAddPlayer(false);
+      setNewPlayer({
+        name: '',
+        number: 0,
+        position: 'Forward',
+        age: 0,
+        height: '',
+        weight: 0,
+        status: 'active'
+      });
+    } catch (error) {
+      console.error('Error adding player:', error);
+    }
+  };
 
   if (loading) {
     return (
@@ -141,12 +179,35 @@ const TeamDetails: React.FC = () => {
             </IonCardHeader>
             <IonCardContent>
               <IonList>
-                {team.roster && team.roster.map((player) => (
-                  <IonItem key={player.id}>
-                    <IonLabel>{player.name}</IonLabel>
+                {players.map(player => (
+                  <IonItem key={player.id} className="player-item">
+                    <IonAvatar slot="start">
+                      <img 
+                        src={player.imageUrl || "/src/pages/images/CloseUpHockey.jpg"} 
+                        alt={player.name} 
+                      />
+                    </IonAvatar>
+                    <IonLabel>
+                      <h2>#{player.number} {player.name}</h2>
+                      <p>{player.position} • {player.age} years • {player.height}</p>
+                      {player.stats && (
+                        <p>G: {player.stats.goals || 0} A: {player.stats.assists || 0} P: {player.stats.points || 0}</p>
+                      )}
+                    </IonLabel>
+                    <IonChip 
+                      color={
+                        player.status === 'active' ? 'success' : 
+                        player.status === 'injured' ? 'danger' : 
+                        'warning'
+                      } 
+                      className='colorWhite' 
+                      slot="end"
+                    >
+                      {player.status.charAt(0).toUpperCase() + player.status.slice(1)}
+                    </IonChip>
                   </IonItem>
                 ))}
-                {!team.roster || team.roster.length === 0 && <IonText><p>No roster information available.</p></IonText>}
+                {!players || players.length === 0 && <IonText><p>No roster information available.</p></IonText>}
               </IonList>
             </IonCardContent>
           </IonCard>
@@ -191,39 +252,23 @@ const TeamDetails: React.FC = () => {
               <IonCardTitle>Statistics</IonCardTitle>
             </IonCardHeader>
             <IonCardContent>
-              {team.stats ? (
+              {teamStats ? (
               <IonGrid>
                 <IonRow>
-                  <IonCol>Games Played:</IonCol>
-                  <IonCol>{team.stats.gamesPlayed}</IonCol>
-                </IonRow>
-                 <IonRow>
-                  <IonCol>Wins:</IonCol>
-                  <IonCol>{team.stats.wins}</IonCol>
-                </IonRow>
-                 <IonRow>
-                  <IonCol>Losses:</IonCol>
-                  <IonCol>{team.stats.losses}</IonCol>
-                </IonRow>
-                 <IonRow>
-                  <IonCol>Draws:</IonCol>
-                  <IonCol>{team.stats.draws}</IonCol>
-                </IonRow>
-                 <IonRow>
-                  <IonCol>Goals For:</IonCol>
-                  <IonCol>{team.stats.goalsFor}</IonCol>
-                </IonRow>
-                 <IonRow>
-                  <IonCol>Goals Against:</IonCol>
-                  <IonCol>{team.stats.goalsAgainst}</IonCol>
-                </IonRow>
-                 <IonRow>
-                  <IonCol>Goal Difference:</IonCol>
-                  <IonCol>{team.stats.goalDifference}</IonCol>
-                </IonRow>
-                 <IonRow>
-                  <IonCol>Points:</IonCol>
-                  <IonCol>{team.stats.points}</IonCol>
+                  <IonCol size="6">
+                    <div className="stat-item">
+                      <IonIcon icon={personAdd} />
+                      <span>{teamStats.totalPlayers}</span>
+                      <small>Total Players</small>
+                    </div>
+                  </IonCol>
+                  <IonCol size="6">
+                    <div className="stat-item">
+                      <IonIcon icon={statsChart} />
+                      <span>{teamStats.totalPoints}</span>
+                      <small>Total Points</small>
+                    </div>
+                  </IonCol>
                 </IonRow>
               </IonGrid>
                ) : (
@@ -233,6 +278,70 @@ const TeamDetails: React.FC = () => {
           </IonCard>
 
         </div>
+
+        {/* Add Player FAB */}
+        <IonFab vertical="bottom" horizontal="end" slot="fixed">
+          <IonFabButton onClick={() => setShowAddPlayer(true)}>
+            <IonIcon icon={add} />
+          </IonFabButton>
+        </IonFab>
+
+        {/* Add Player Modal */}
+        <IonModal isOpen={showAddPlayer} onDidDismiss={() => setShowAddPlayer(false)}>
+          <IonHeader>
+            <IonToolbar>
+              <IonTitle>Add New Player</IonTitle>
+            </IonToolbar>
+          </IonHeader>
+          <IonContent className="ion-padding">
+            <IonInput
+              label="Name"
+              labelPlacement="floating"
+              value={newPlayer.name}
+              onIonChange={e => setNewPlayer({...newPlayer, name: e.detail.value!})}
+            />
+            <IonInput
+              label="Number"
+              labelPlacement="floating"
+              type="number"
+              value={newPlayer.number}
+              onIonChange={e => setNewPlayer({...newPlayer, number: parseInt(e.detail.value!)})}
+            />
+            <IonSelect
+              label="Position"
+              labelPlacement="floating"
+              value={newPlayer.position}
+              onIonChange={e => setNewPlayer({...newPlayer, position: e.detail.value})}
+            >
+              <IonSelectOption value="Forward">Forward</IonSelectOption>
+              <IonSelectOption value="Defense">Defense</IonSelectOption>
+              <IonSelectOption value="Goalie">Goalie</IonSelectOption>
+            </IonSelect>
+            <IonInput
+              label="Age"
+              labelPlacement="floating"
+              type="number"
+              value={newPlayer.age}
+              onIonChange={e => setNewPlayer({...newPlayer, age: parseInt(e.detail.value!)})}
+            />
+            <IonInput
+              label="Height"
+              labelPlacement="floating"
+              value={newPlayer.height}
+              onIonChange={e => setNewPlayer({...newPlayer, height: e.detail.value!})}
+            />
+            <IonInput
+              label="Weight"
+              labelPlacement="floating"
+              type="number"
+              value={newPlayer.weight}
+              onIonChange={e => setNewPlayer({...newPlayer, weight: parseInt(e.detail.value!)})}
+            />
+            <IonButton expand="block" onClick={handleAddPlayer} className="ion-margin-top">
+              Add Player
+            </IonButton>
+          </IonContent>
+        </IonModal>
       </IonContent>
     </IonPage>
   );
