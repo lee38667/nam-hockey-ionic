@@ -91,11 +91,6 @@ const LoginPage: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Namibia Hockey</IonTitle>
-        </IonToolbar>
-      </IonHeader>
       <IonContent className="ion-padding">
         <IonGrid className="ion-padding">
           <IonRow className="ion-justify-content-center">

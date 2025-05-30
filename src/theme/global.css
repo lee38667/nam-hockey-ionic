@@ -462,3 +462,15 @@ body.dark .add-match-modal button:hover,
 body.dark .add-match-modal .ion-button:hover {
   background: #ffe705cc !important;
 }
+
+/* Login Page Background */
+body.login-page, .login-page, .login-background {
+  background: #133065 !important;
+}
+
+/* If using IonContent for login, target it as well */
+body.login-page ion-content,
+.login-page ion-content,
+.login-background ion-content {
+  --background: #133065 !important;
+}
