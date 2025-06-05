@@ -95,4 +95,12 @@ ion-button {
   .login-card ion-card-content {
     padding: 0.5rem;
   }
-} 
+}
+
+ion-content.login-background {
+  --background: #133065 !important;
+}
+
+body.dark ion-content.login-background {
+  --background: #0d1833 !important;
+}

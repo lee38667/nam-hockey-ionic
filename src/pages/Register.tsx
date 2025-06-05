@@ -17,7 +17,9 @@ import {
   IonIcon,
   IonText,
   useIonToast,
-  createAnimation
+  createAnimation,
+  IonSelect,
+  IonSelectOption
 } from '@ionic/react';
 import { lockClosedOutline, personOutline, mailOutline } from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
@@ -30,6 +32,7 @@ const Register: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [role, setRole] = useState('fan'); // Default role
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const [presentToast] = useIonToast();
@@ -61,7 +64,13 @@ const Register: React.FC = () => {
       await updateProfile(userCredential.user, {
         displayName: name
       });
-      
+      // Save user role to Firestore
+      await fetch('/api/saveUserRole', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ uid: userCredential.user.uid, email, role })
+      });
+
       presentToast({
         message: 'Account created successfully!',
         duration: 2000,
@@ -132,7 +141,7 @@ const Register: React.FC = () => {
                 <IonCardContent>
                   <div className="ion-text-center ion-padding">
                     <img 
-                      src="/src/pages/images/SplashScreen.png" 
+                      src="https://d4f7y6nbupj5z.cloudfront.net/wp-content/uploads/2022/07/Namibiau20squad.jpg" 
                       alt="Namibia Hockey Logo" 
                       className="register-logo"
                     />
@@ -188,6 +197,21 @@ const Register: React.FC = () => {
                     />
                   </IonItem>
 
+                  <IonItem className="ion-margin-bottom custom-input">
+                    <IonLabel position="stacked">Role</IonLabel>
+                    <IonSelect
+                      value={role}
+                      onIonChange={e => setRole(e.detail.value)}
+                      disabled={isLoading}
+                      className="custom-input-field"
+                    >
+                      <IonSelectOption value="fan">Fan</IonSelectOption>
+                      <IonSelectOption value="player">Player</IonSelectOption>
+                      <IonSelectOption value="coach">Coach</IonSelectOption>
+                      <IonSelectOption value="admin">Admin</IonSelectOption>
+                    </IonSelect>
+                  </IonItem>
+
                   <IonButton
                     expand="block"
                     onClick={handleRegister}
@@ -219,4 +243,4 @@ const Register: React.FC = () => {
   );
 };
 
-export default Register; 
+export default Register;
