@@ -5,7 +5,8 @@ import {
   onSnapshot,
   addDoc,
   updateDoc,
-  doc
+  doc,
+  DocumentData
 } from 'firebase/firestore';
 import { db } from './firebaseConfig';
 
@@ -56,8 +57,4 @@ export const addTeam = async (team: Omit<Team, 'id'>): Promise<string> => {
 export const updateTeam = async (teamId: string, updates: Partial<Team>): Promise<void> => {
   const teamRef = doc(db, 'teams', teamId);
   await updateDoc(teamRef, updates);
-};
-
-export const isPlayerAssigned = (playerId: string, assignedPlayers: string[]): boolean => {
-  return assignedPlayers.includes(playerId);
-};
+}; 

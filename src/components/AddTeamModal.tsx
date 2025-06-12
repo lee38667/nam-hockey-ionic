@@ -14,13 +14,15 @@ import {
   IonFab,
   IonFabButton,
   IonModal,
+  IonGrid,
+  IonRow,
+  IonCol,
   IonTextarea
 } from '@ionic/react';
-import { close, personAdd, create, trash } from 'ionicons/icons';
+import { add, close, personAdd, create, trash } from 'ionicons/icons';
 import { useState } from 'react';
 import { addTeam } from '../firebase/teamService';
 import { addPlayer } from '../firebase/playerService';
-import { isPlayerAssigned } from '../firebase/teamService';
 
 interface AddTeamModalProps {
   isOpen: boolean;
@@ -148,9 +150,6 @@ const AddTeamModal: React.FC<AddTeamModalProps> = ({ isOpen, onClose }) => {
     setPlayers(players.filter((_, i) => i !== index));
   };
 
-  // Before rendering, create an array of assigned player numbers as strings:
-  const assignedPlayerNumbers = players.map(p => String(p.number));
-
   return (
     <IonModal isOpen={isOpen} onDidDismiss={onClose}>
       <IonHeader>
@@ -209,18 +208,13 @@ const AddTeamModal: React.FC<AddTeamModalProps> = ({ isOpen, onClose }) => {
             <IonLabel>Players ({players.length})</IonLabel>
           </IonItem>
           {players.map((player, index) => (
-            <IonItem
-              key={index}
-              color={isPlayerAssigned(String(player.number), assignedPlayerNumbers) ? 'light' : ''}
-              disabled={isPlayerAssigned(String(player.number), assignedPlayerNumbers)}
-            >
+            <IonItem key={index}>
               <IonLabel>
                 <h2>#{player.number} {player.name}</h2>
                 <p>{player.position} • {player.age} years • {player.height}</p>
                 <p>DOB: {player.dateOfBirth}</p>
                 <p>Stats: G: {player.stats.goals} A: {player.stats.assists} P: {player.stats.points}</p>
               </IonLabel>
-              {isPlayerAssigned(String(player.number), assignedPlayerNumbers) && <IonIcon icon="checkmark" />}
               <IonButton fill="clear" onClick={() => handleEditPlayer(index)}>
                 <IonIcon icon={create} />
               </IonButton>
@@ -359,4 +353,4 @@ const AddTeamModal: React.FC<AddTeamModalProps> = ({ isOpen, onClose }) => {
   );
 };
 
-export default AddTeamModal;
+export default AddTeamModal; 

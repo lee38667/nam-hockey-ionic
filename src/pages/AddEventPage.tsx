@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonButton, IonItem, IonLabel, IonList, IonText } from '@ionic/react';
 import { addEvent } from '../firebase/firestore';
-import { requestFCMPermission } from '../firebase/firebaseConfig';
 
 const AddEventPage: React.FC = () => {
   const [eventName, setEventName] = useState('');
@@ -21,17 +20,8 @@ const AddEventPage: React.FC = () => {
       setSuccess('Event added successfully!');
       setEventName('');
       setEventDate('');
-    } catch (e) {
+    } catch (e: any) {
       setError('Error adding event: ' + e.message);
-    }
-  };
-
-  const handleRequestFCMPermission = async () => {
-    try {
-      await requestFCMPermission();
-      console.log('FCM permission granted');
-    } catch (e) {
-      console.error('Error requesting FCM permission:', e);
     }
   };
 
@@ -56,10 +46,9 @@ const AddEventPage: React.FC = () => {
         {error && <IonText color="danger"><p>{error}</p></IonText>}
         {success && <IonText color="success"><p>{success}</p></IonText>}
         <IonButton expand="block" onClick={handleAddEvent}>Add Event</IonButton>
-        <IonButton expand="block" onClick={handleRequestFCMPermission}>Request FCM Permission</IonButton>
       </IonContent>
     </IonPage>
   );
 };
 
-export default AddEventPage;
+export default AddEventPage; 

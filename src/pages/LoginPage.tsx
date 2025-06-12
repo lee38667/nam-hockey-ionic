@@ -13,7 +13,8 @@ import {
   IonCardContent,
   IonText,
   useIonToast,
-  createAnimation
+  createAnimation,
+  IonInput
 } from '@ionic/react';
 import { login } from '../firebase/firebaseAuth';
 import { resetPassword } from '../firebase/auth';

@@ -1,14 +1,18 @@
 import React from 'react';
 import { useUserRole } from '../hooks/useUserRole';
+import { UserRole } from '../firebase/userRoles';
 
 interface RoleGuardProps {
-  allowedRoles: string[];
   children: React.ReactNode;
+  requiredRole: UserRole[];
 }
 
-export const RoleGuard: React.FC<RoleGuardProps> = ({ allowedRoles, children }) => {
-  const { role, loading } = useUserRole();
-  if (loading) return null;
-  if (!role || !allowedRoles.includes(role)) return null;
+const RoleGuard: React.FC<RoleGuardProps> = ({ children, requiredRole }) => {
+  const { role } = useUserRole();
+  if (!role || !requiredRole.includes(role)) {
+    return null;
+  }
   return <>{children}</>;
 };
+
+export default RoleGuard;

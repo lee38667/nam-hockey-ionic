@@ -8,9 +8,7 @@ import {
   IonTabButton,
   IonTabs,
   setupIonicReact,
-  IonContent,
-  IonHeader,
-  IonToolbar
+  IonContent
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import {
@@ -22,7 +20,7 @@ import {
 } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-// import RotatingLogo from './components/RotatingLogo';
+import ProtectedRoute from './components/ProtectedRoute';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -68,6 +66,8 @@ import AddNews from './pages/AddNews';
 import TeamDetails from './pages/TeamDetails';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
+import AddMatchPage from './pages/AddMatchPage';
+import AddTeamPage from './pages/AddTeamPage';
 
 setupIonicReact({
   mode: 'ios'
@@ -75,7 +75,6 @@ setupIonicReact({
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   const auth = getAuth();
 
   useEffect(() => {
@@ -86,7 +85,6 @@ const App: React.FC = () => {
     // Check for saved theme preference
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
-      setIsDarkMode(true);
       document.body.classList.add('dark-theme');
     }
 
@@ -114,36 +112,18 @@ const App: React.FC = () => {
         {isAuthenticated ? (
           <IonTabs>
             <IonRouterOutlet>
-              <Route exact path="/home">
-                <Home />
-              </Route>
-              <Route exact path="/teams">
-                <Teams />
-              </Route>
-              <Route exact path="/team/:id">
-                <TeamDetails />
-              </Route>
-              <Route exact path="/matches">
-                <Matches />
-              </Route>
-              <Route exact path="/news">
-                <News />
-              </Route>
-              <Route exact path="/more">
-                <More />
-              </Route>
-              <Route exact path="/register-team">
-                <RegisterTeam />
-              </Route>
-              <Route exact path="/register-player">
-                <RegisterPlayer />
-              </Route>
-              <Route exact path="/add-news">
-                <AddNews />
-              </Route>
-              <Route exact path="/profile">
-                <Profile />
-              </Route>
+              <ProtectedRoute exact path="/home" component={Home} />
+              <ProtectedRoute exact path="/teams" component={Teams} />
+              <ProtectedRoute exact path="/team/:id" component={TeamDetails} />
+              <ProtectedRoute exact path="/matches" component={Matches} />
+              <ProtectedRoute exact path="/news" component={News} />
+              <ProtectedRoute exact path="/more" component={More} />
+              <ProtectedRoute exact path="/register-team" component={RegisterTeam} requiredRole={['admin']} />
+              <ProtectedRoute exact path="/register-player" component={RegisterPlayer} requiredRole={['admin','coach']} />
+              <ProtectedRoute exact path="/add-news" component={AddNews} requiredRole={['admin']} />
+              <ProtectedRoute exact path="/profile" component={Profile} />
+              <ProtectedRoute exact path="/add-team" component={AddTeamPage} requiredRole={['admin']} />
+              <ProtectedRoute exact path="/add-match" component={AddMatchPage} requiredRole={['admin','coach']} />
               <Route exact path="/">
                 <Redirect to="/home" />
               </Route>

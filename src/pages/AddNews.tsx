@@ -17,6 +17,7 @@ import {
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { addNews } from '../firebase/newsService';
+import { useUserRole, canEditNews } from '../hooks/useUserRole';
 // import './AddNews.css';
 
 const AddNews: React.FC = () => {
@@ -26,8 +27,14 @@ const AddNews: React.FC = () => {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const history = useHistory();
+  const { role, loading } = useUserRole();
 
   const handleSubmit = async () => {
+    if (!canEditNews(role)) {
+      setToastMessage('Access denied: You do not have permission to add news.');
+      setShowToast(true);
+      return;
+    }
     try {
       if (!title || !content) {
         setToastMessage('Please fill in all required fields');
@@ -103,9 +110,15 @@ const AddNews: React.FC = () => {
           />
         </IonItem>
 
-        <IonButton expand="block" onClick={handleSubmit} className="ion-margin-top">
-          Add News
-        </IonButton>
+        {canEditNews(role) ? (
+          <IonButton expand="block" onClick={handleSubmit} className="ion-margin-top">
+            Add News
+          </IonButton>
+        ) : (
+          <IonButton expand="block" disabled className="ion-margin-top">
+            Add News (No Permission)
+          </IonButton>
+        )}
 
         <IonToast
           isOpen={showToast}
@@ -119,4 +132,4 @@ const AddNews: React.FC = () => {
   );
 };
 
-export default AddNews; 
+export default AddNews;

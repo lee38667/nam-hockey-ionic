@@ -29,7 +29,6 @@ import { Team, subscribeToTeams } from '../firebase/teamService';
 import { getPlayerStats } from '../firebase/playerService';
 import './Teams.css';
 import { useHistory } from 'react-router-dom';
-import AddTeamModal from '../components/AddTeamModal';
 
 const Teams: React.FC = () => {
   const [teams, setTeams] = useState<Team[]>([]);
@@ -42,7 +41,6 @@ const Teams: React.FC = () => {
     active: 0
   });
   const history = useHistory();
-  const [showAddTeam, setShowAddTeam] = useState(false);
 
   useEffect(() => {
     const unsubscribe = subscribeToTeams(async (teamsData) => {
@@ -203,16 +201,10 @@ const Teams: React.FC = () => {
 
         {/* Add Team FAB */}
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
-          <IonFabButton onClick={() => setShowAddTeam(true)}>
+          <IonFabButton onClick={() => history.push('/add-team')}>
             <IonIcon icon={add} />
           </IonFabButton>
         </IonFab>
-
-        {/* Add Team Modal */}
-        <AddTeamModal 
-          isOpen={showAddTeam} 
-          onClose={() => setShowAddTeam(false)} 
-        />
       </IonContent>
     </IonPage>
   );

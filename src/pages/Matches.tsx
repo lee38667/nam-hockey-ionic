@@ -22,17 +22,18 @@ import {
   IonFab,
   IonFabButton
 } from '@ionic/react';
-import { calendarOutline, locationOutline, timeOutline, addOutline } from 'ionicons/icons';
+import { locationOutline, timeOutline, addOutline } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 import { Match, subscribeToMatches } from '../firebase/matchService';
-import AddMatchModal from '../components/AddMatchModal';
+import { useHistory } from 'react-router-dom';
+import { Timestamp } from 'firebase/firestore';
 import './Matches.css';
 
 const Matches: React.FC = () => {
   const [selectedSegment, setSelectedSegment] = useState<'upcoming' | 'live' | 'past'>('upcoming');
   const [matches, setMatches] = useState<Match[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     setLoading(true);
@@ -52,7 +53,7 @@ const Matches: React.FC = () => {
     event.detail.complete();
   };
 
-  const formatDate = (timestamp: any) => {
+  const formatDate = (timestamp: Timestamp) => {
     const date = timestamp.toDate();
     return date.toLocaleDateString('en-US', {
       weekday: 'short',
@@ -161,18 +162,13 @@ const Matches: React.FC = () => {
         )}
 
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
-          <IonFabButton onClick={() => setIsAddModalOpen(true)}>
+          <IonFabButton onClick={() => history.push('/add-match')}>
             <IonIcon icon={addOutline} />
           </IonFabButton>
         </IonFab>
-
-        <AddMatchModal 
-          isOpen={isAddModalOpen} 
-          onClose={() => setIsAddModalOpen(false)} 
-        />
       </IonContent>
     </IonPage>
   );
 };
 
-export default Matches; 
+export default Matches;

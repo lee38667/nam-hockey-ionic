@@ -25,6 +25,7 @@ import { lockClosedOutline, personOutline, mailOutline } from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '../firebase/firebaseAuth';
+import { setUserRole } from '../firebase/userRoles';
 import './Register.css';
 
 const Register: React.FC = () => {
@@ -64,12 +65,8 @@ const Register: React.FC = () => {
       await updateProfile(userCredential.user, {
         displayName: name
       });
-      // Save user role to Firestore
-      await fetch('/api/saveUserRole', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ uid: userCredential.user.uid, email, role })
-      });
+      // Save user role to Firestore (directly, not via API)
+      await setUserRole(userCredential.user.uid, role);
 
       presentToast({
         message: 'Account created successfully!',
