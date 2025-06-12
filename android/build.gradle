@@ -1,14 +1,13 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.7.2'
-        classpath 'com.google.gms:google-services:4.4.2'
+        classpath 'com.android.tools.build:gradle:8.0.0'
+        classpath 'com.google.gms:google-services:4.4.0'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -22,11 +21,34 @@ allprojects {
         google()
         mavenCentral()
     }
-    
-    // Set Java compatibility for all projects
+      // Set Java compatibility for all projects
     tasks.withType(JavaCompile) {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+        options.release.set(17)
+    }
+    tasks.withType(Test) {
+        javaLauncher.set(javaToolchains.launcherFor {
+            languageVersion = JavaLanguageVersion.of(17)
+        })
+    }
+    
+    // Force same version for all Kotlin dependencies
+    configurations.all {
+        resolutionStrategy {
+            force 'org.jetbrains.kotlin:kotlin-stdlib:1.8.10'
+            force 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.10'
+            force 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.10'
+        }
+    }
+    
+    // Force specific versions of Kotlin dependencies
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            if (details.requested.group == 'org.jetbrains.kotlin') {
+                details.useVersion '1.8.10'
+            }
+        }
     }
 }
 

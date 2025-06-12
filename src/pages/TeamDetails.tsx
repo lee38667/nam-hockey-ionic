@@ -55,55 +55,105 @@ const TeamDetails: React.FC = () => {
     status: 'active'
   });
 
+  // Load team data
   useEffect(() => {
-    const fetchTeamData = async () => {
-      if (!id) {
-        setError("No team ID provided.");
-        setLoading(false);
-        return;
-      }
+    // Don't do anything if we don't have an ID
+    if (!id) {
+      setError("No team ID provided.");
+      setLoading(false);
+      return;
+    }
 
+    let isMounted = true;
+    const teamDocRef = doc(db, 'teams', id);
+
+    const fetchTeamData = async () => {
       try {
-        setLoading(true);
-        const teamDocRef = doc(db, 'teams', id);
         const teamDocSnap = await getDoc(teamDocRef);
+
+        if (!isMounted) return;
 
         if (teamDocSnap.exists()) {
           const teamData = teamDocSnap.data() as Team;
           setTeam({ ...teamData, id: teamDocSnap.id });
+          setError(null); // Clear any previous error
         } else {
-          setError(`No team found with ID: ${id}`);
+          throw new Error(`No team found with ID: ${id}`);
         }
       } catch (err) {
+        if (!isMounted) return;
         console.error("Error fetching team data:", err);
-        setError("Failed to fetch team data.");
+        setError(err instanceof Error ? err.message : "Failed to fetch team data.");
+        setTeam(null); // Clear team data on error
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 
+    setLoading(true);
     fetchTeamData();
-  }, [id]);
 
+    return () => {
+      isMounted = false;
+    };
+  }, [id]); // Only depend on id parameter
+
+  // Load players and stats
   useEffect(() => {
+    // Don't do anything if we don't have an ID
     if (!id) return;
 
+    let isMounted = true;
+
+    // Subscribe to team players
     const unsubscribe = subscribeToTeamPlayers(id, (playersData) => {
+      if (!isMounted) return;
       setPlayers(playersData);
-      setLoading(false);
     });
 
     // Load team stats
-    getPlayerStats(id).then(setTeamStats);
+    const loadStats = async () => {
+      try {
+        const stats = await getPlayerStats(id);
+        if (isMounted) {
+          setTeamStats(stats);
+        }
+      } catch (error) {
+        console.error("Error loading team stats:", error);
+        if (isMounted) {
+          setTeamStats(null);
+        }
+      }
+    };
 
-    return () => unsubscribe();
-  }, [id]);
+    loadStats();
+
+    return () => {
+      isMounted = false;
+      unsubscribe();
+    };
+  }, [id]); // Only depend on id parameter
 
   const handleAddPlayer = async () => {
-    if (!id) return;
+    if (!id || !team) return;
+
     try {
-      await addPlayer(id, newPlayer as Omit<Player, 'id' | 'teamId'>);
-      setShowAddPlayer(false);
+      // Add the player with the correct team ID
+      await addPlayer(id, {
+        ...newPlayer as Omit<Player, 'id' | 'teamId'>,
+        status: 'active',
+        stats: {
+          goals: 0,
+          assists: 0,
+          points: 0,
+          gamesPlayed: 0,
+          penaltyMinutes: 0
+        }
+      });
+
+      // Reset form
       setNewPlayer({
         name: '',
         number: 0,
@@ -113,6 +163,14 @@ const TeamDetails: React.FC = () => {
         weight: 0,
         status: 'active'
       });
+      
+      // Close modal
+      setShowAddPlayer(false);
+
+      // Refresh team stats
+      const stats = await getPlayerStats(id);
+      setTeamStats(stats);
+
     } catch (error) {
       console.error('Error adding player:', error);
     }
@@ -347,4 +405,4 @@ const TeamDetails: React.FC = () => {
   );
 };
 
-export default TeamDetails; 
+export default TeamDetails;

@@ -10,12 +10,13 @@ NAM Hockey is a cross-platform mobile application built with Ionic and React, de
 1. [Project Structure](#project-structure)
 2. [Key Features](#key-features)
 3. [Main Directories & Files](#main-directories--files)
-4. [Firebase Integration](#firebase-integration)
-5. [Testing](#testing)
-6. [Running the App](#running-the-app)
-7. [Build & Deployment](#build--deployment)
-8. [Styling & Theming](#styling--theming)
-9. [Resources](#resources)
+4. [Functionality Locations](#functionality-locations)
+5. [Firebase Integration](#firebase-integration)
+6. [Testing](#testing)
+7. [Running the App](#running-the-app)
+8. [Build & Deployment](#build--deployment)
+9. [Styling & Theming](#styling--theming)
+10. [Resources](#resources)
 
 ---
 
@@ -24,28 +25,22 @@ NAM Hockey is a cross-platform mobile application built with Ionic and React, de
 ```
 Root
 │   capacitor.config.ts
-│   cypress.config.ts
-│   eslint.config.js
-│   index.html
 │   ionic.config.json
 │   package.json
 │   tsconfig.json
 │   vite.config.ts
 ├── android/                # Android native project files
-├── cypress/                # End-to-end tests (Cypress)
-├── public/                 # Static assets (images, icons, manifest)
-├── resources/              # App icons and splash screens
-└── src/                    # Main source code
-    ├── App.tsx             # Main app component
-    ├── main.tsx            # App entry point
-    ├── backend/            # Backend logic (if any)
-    ├── components/         # Reusable UI components
-    ├── firebase/           # Firebase services and config
-    ├── pages/              # App pages (screens)
-    ├── theme/              # Global and variable CSS
+├── cypress/               # End-to-end tests
+├── public/               # Static assets
+├── resources/            # App icons and splash screens
+└── src/                  # Main source code
+    ├── App.tsx          # Main app component
+    ├── components/      # Reusable UI components
+    ├── firebase/       # Firebase services
+    ├── hooks/          # Custom React hooks
+    ├── pages/          # App pages/screens
+    └── theme/          # Styling and theming
 ```
-
----
 
 ## Key Features
 - User authentication (Firebase Auth)
@@ -75,6 +70,96 @@ Each file represents a screen in the app (e.g., `Home.tsx`, `Matches.tsx`, `Team
 ### src/theme/
 - `global.css`: Global styles and dark mode overrides
 - `variables.css`: CSS variables for theming
+
+---
+
+## Functionality Locations
+
+### Authentication System
+- **Login Implementation**: `src/pages/LoginPage.tsx`
+  - Email/password authentication
+  - Toast notifications for feedback
+  - Animated transitions
+  
+- **Registration**: `src/pages/Register.tsx`
+  - User registration with roles
+  - Password confirmation
+  - Default role assignment
+
+- **Firebase Auth Service**: `src/firebase/firebaseAuth.ts`
+  - Login/logout functions
+  - User creation
+  - Auth state management
+
+### Role-Based Access Control
+- **Role Management**: `src/hooks/useUserRole.ts`
+  - Custom hook for role state
+  - Permission checking functions
+  - Role-based conditionals
+
+- **Protected Routes**: `src/components/ProtectedRoute.tsx`
+  - Route protection based on roles
+  - Authentication checking
+  - Loading states
+
+- **Role Guard**: `src/components/RoleGuard.tsx`
+  - UI element protection
+  - Role-based visibility control
+  
+- **User Roles Service**: `src/firebase/userRoles.ts`
+  - Role definitions
+  - Role assignment
+  - Permission checking
+
+### Team Management
+- **Team Registration**: `src/pages/RegisterTeam.tsx`
+  - Team creation form
+  - Division assignment
+  - Admin-only access
+
+- **Team Service**: `src/firebase/teamService.ts`
+  - CRUD operations
+  - Team data management
+  - Real-time updates
+
+### Player Management
+- **Player Registration**: `src/pages/RegisterPlayer.tsx`
+  - Player creation form
+  - Team assignment
+  - Position selection
+
+- **Player Service**: `src/firebase/playerService.ts`
+  - Player CRUD operations
+  - Team association
+  - Stats tracking
+
+### Match & Event Management
+- **Match Creation**: `src/pages/Matches.tsx`
+  - Match scheduling
+  - Score tracking
+  - Real-time updates
+
+- **Event Management**: `src/pages/Events.tsx`
+  - Event creation
+  - Event details
+  - Calendar integration
+
+### News System
+- **News Management**: `src/pages/News.tsx`
+  - News article creation
+  - Admin posting capability
+  - Public viewing
+
+- **News Service**: `src/firebase/newsService.ts`
+  - Article CRUD operations
+  - Media handling
+  - Categories management
+
+### User Profile
+- **Profile Management**: `src/pages/Profile.tsx`
+  - Email updates
+  - Password changes
+  - Profile customization
 
 ---
 
