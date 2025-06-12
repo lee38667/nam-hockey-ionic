@@ -12,3 +12,7 @@ window.matchMedia = window.matchMedia || function() {
       removeListener: function() {}
   };
 };
+
+// Firebase test initialization
+// Importing app from firebaseConfig ensures Firebase is initialized for tests
+import './firebase/firebaseConfig';

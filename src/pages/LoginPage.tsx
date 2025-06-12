@@ -2,11 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   IonContent,
-  IonHeader,
   IonPage,
-  IonTitle,
-  IonToolbar,
-  IonInput,
   IonButton,
   IonItem,
   IonLabel,
@@ -15,14 +11,12 @@ import {
   IonCol,
   IonCard,
   IonCardContent,
-  IonIcon,
   IonText,
   useIonToast,
-  IonRouterOutlet,
   createAnimation
 } from '@ionic/react';
-import { lockClosedOutline } from 'ionicons/icons';
 import { login } from '../firebase/firebaseAuth';
+import { resetPassword } from '../firebase/auth';
 import { useHistory } from 'react-router-dom';
 import { SplashScreen } from '@capacitor/splash-screen';
 import './LoginPage.css';
@@ -31,12 +25,14 @@ const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [showReset, setShowReset] = useState(false);
+  const [resetEmail, setResetEmail] = useState('');
   const history = useHistory();
-  const [presentToast] = useIonToast();
+  const [present] = useIonToast();
 
   const handleLogin = async () => {
     if (!email || !password) {
-      presentToast({
+      present({
         message: 'Please enter both email and password',
         duration: 2000,
         position: 'bottom',
@@ -49,8 +45,8 @@ const LoginPage: React.FC = () => {
     try {
       await login(email, password);
       history.push('/home');
-    } catch (error: any) {
-      presentToast({
+    } catch (error) {
+      present({
         message: error.message || 'Login failed. Please try again.',
         duration: 2000,
         position: 'bottom',
@@ -151,6 +147,62 @@ const LoginPage: React.FC = () => {
                     >
                       Sign Up
                     </IonButton>
+                  </div>
+
+                  <div className="ion-text-center ion-margin-top">
+                    {showReset ? (
+                      <form
+                        onSubmit={async e => {
+                          e.preventDefault();
+                          try {
+                            await resetPassword(resetEmail);
+                            present({ message: 'Password reset email sent!', duration: 2000, color: 'success' });
+                            setShowReset(false);
+                          } catch {
+                            present({ message: 'Error sending reset email', duration: 2000, color: 'danger' });
+                          }
+                        }}
+                      >
+                        <IonItem className="ion-margin-bottom custom-input">
+                          <IonLabel position="stacked">Reset Email</IonLabel>
+                          <IonInput
+                            type="email"
+                            value={resetEmail}
+                            onIonChange={e => setResetEmail(e.detail.value!)}
+                            placeholder="Enter your email"
+                            required
+                            className="custom-input-field"
+                          />
+                        </IonItem>
+
+                        <IonButton
+                          expand="block"
+                          type="submit"
+                          className="ion-margin-top"
+                          disabled={isLoading}
+                        >
+                          Send Reset Link
+                        </IonButton>
+
+                        <IonButton
+                          expand="block"
+                          fill="clear"
+                          onClick={() => setShowReset(false)}
+                          className="ion-margin-top"
+                        >
+                          Cancel
+                        </IonButton>
+                      </form>
+                    ) : (
+                      <IonButton
+                        expand="block"
+                        fill="clear"
+                        onClick={() => setShowReset(true)}
+                        className="ion-margin-top"
+                      >
+                        Forgot Password?
+                      </IonButton>
+                    )}
                   </div>
                 </IonCardContent>
               </IonCard>

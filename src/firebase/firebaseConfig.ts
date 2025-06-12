@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -69,4 +70,19 @@ export const initializeTeams = async () => {
   } catch (error) {
     console.error('Error adding sample teams:', error);
   }
-}; 
+};
+
+export const requestFCMPermission = async () => {
+  const messaging = getMessaging();
+  try {
+    const token = await getToken(messaging, { vapidKey: 'YOUR_VAPID_KEY' });
+    return token;
+  } catch {
+    return null;
+  }
+};
+
+export const subscribeToNotifications = (onNotification: (payload: unknown) => void) => {
+  const messaging = getMessaging();
+  onMessage(messaging, onNotification);
+};
